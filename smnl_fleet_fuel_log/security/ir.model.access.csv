@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_fuel_filling,fuel.filling,model_fuel_filling,,1,1,1,1
+access_fleet_tanker,fleet.tanker,model_fleet_tanker,,1,1,1,1
+access_tanker_notify,tanker.notify,model_tanker_notify,,1,1,1,1

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="smnl_fleet_vehicle_model_view_form">
+            <field name="name">smnl.fleet.vehicle.model.view.form</field>
+            <field name="model">fleet.vehicle.model</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_model_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('oe_title')]" position="inside">
+                    <label for="fleet_type" class="oe_edit_only"/>
+                    <field name="fleet_type" required="1" placeholder="e.g. Car"/>
+                    <div>
+                        <field name="product_id" required="0" readonly="1" force_save="1"/>
+                    </div>
+                </xpath>
+                <xpath expr="//div[hasclass('oe_title')]" position="after">
+                    <group>
+                        <field name="company_id"/>
+                    </group>
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page name="fleet" string="Fleet">
+                        <field name="fleet_ids"/>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

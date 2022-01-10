@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id='fleet_fuel_filling_form' model='ir.ui.view'>
+            <field name="name">fleet.fuel.filling.form</field>
+            <field name="model">fuel.filling</field>
+            <field name="arch" type="xml">
+                <form string="Fuel Filling">
+                    <header>
+                        <button class="btn btn-primary" type="object" name="action_confirm" string="Confirm"
+                                states="draft"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="tank_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                <field name="product_id"
+                                       domain="[('product_tmpl_id.categ_id.name', '=', 'Fuel')]"
+                                       attrs="{'readonly': [('state', '!=', 'draft')]}" required="1"/>
+                                <field name="responsible_id" readonly="1"/>
+                                <field name="price_per_ltr" readonly="1" force_save="1" widget="monetary"/>
+                                <field name="company_id" invisible="1"/>
+                                <field name="currency_id" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="driver_id"/>
+                                <field name="capacity" readonly="1" force_save="1"/>
+                                <field name="tank_qty" readonly="1" force_save="1"/>
+                                <field name="avail_qty" readonly="1" force_save="1"/>
+                                <field name="qty" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                <field name="picking_id" invisible="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id='fleet_fuel_filling_tree' model='ir.ui.view'>
+            <field name="name">fleet.fuel.filling.tree</field>
+            <field name="model">fuel.filling</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="responsible_id"/>
+                    <field name="qty"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id='fuel_filling_action' model='ir.actions.act_window'>
+            <field name="name">Tanker Fuel Filling</field>
+            <field name="res_model">fuel.filling</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new Fuel Filling details
+                </p>
+                <p>
+                    Manage your Fuel Filling details service details etc .,
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_fuel_filling" name="Fuel Filling" parent="smnl_fleet_fuel_log.menu_tanker_master"
+                  action="smnl_fleet_fuel_log.fuel_filling_action"
+                  sequence="2"/>
+
+        <record id="view_fleet_vehicle_log_fuel_form" model="ir.ui.view">
+            <field name="name">fleet.vehicle.log.fuel.form</field>
+            <field name="model">fleet.vehicle.log.fuel</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_log_fuel_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="before">
+                    <header>
+                        <button class="btn btn-primary" type="object" name="action_accept" string="Accept"
+                                states="fuel_request"/>
+                        <button class="btn btn-primary" type="object" name="action_confirm" string="Confirm"
+                                states="draft"/>
+                        <button class="btn btn-default" type="object" name="action_cancel" string="Cancel"
+                                states="confirm"/>
+                        <field name="state" widget="statusbar" statusbar_visible="fuel_request,draft,confirm"/>
+                    </header>
+                </xpath>
+                <xpath expr="//form/sheet/group[1]" position="before">
+                    <div class="oe_title">
+                        <h1>
+                            <field name="request_number"/>
+                        </h1>
+                    </div>
+                </xpath>
+
+                <field name="vehicle_id" position="after">
+                    <field name="vehicle_type"/>
+                    <field name="driver_id"/>
+                    <field name="requester_by_id"/>
+                    <field name="request_date_time"/>
+                </field>
+
+                <xpath expr="//field[@name='liter']" position="before">
+                    <field name="tanker_id"
+                           attrs="{'readonly': [('state', '=', 'confirm')], 'required': [('state', '!=', 'fuel_request')]}"
+                           options='{"no_open": True, "no_create": True}'/>
+                </xpath>
+                <xpath expr="//field[@name='liter']" position="replace">
+                    <field name="liter" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                </xpath>
+                <xpath expr="//sheet/group[2]/group[1]" position="replace">
+                    <group string="Odometer Details">
+                        <label for="odometer"/>
+                        <div>
+                            <field name="odometer" class="oe_inline"/>
+                            <field name="lifetime_value" class="oe_inline"/>
+                        </div>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

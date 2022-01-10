@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="hr_attendance_view_filter_inherit" model="ir.ui.view">
+            <field name="name">hr.attendance.form</field>
+            <field name="model">hr.attendance</field>
+            <field name="inherit_id" ref="hr_attendance.hr_attendance_view_filter" />
+            <field name="arch" type="xml">
+                <filter name="employee" position="after">
+                    <filter name="swipe_status" string="Swipe Status" context="{'group_by':'swipe_status'}"/>
+                </filter>
+            </field>
+        </record>
+        <record id="hr_attendance_view_tree_inherit" model="ir.ui.view">
+            <field name="name">hr.attendance.form</field>
+            <field name="model">hr.attendance</field>
+            <field name="inherit_id" ref="hr_attendance.view_attendance_tree" />
+            <field name="arch" type="xml">
+                <field name="check_out" position="after">
+                    <field name="swipe_status"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

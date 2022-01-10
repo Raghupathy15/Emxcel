@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+<odoo>
+    <!-- Multi company rule -->
+    <record id="fleet_multi_company_rule" model="ir.rule">
+        <field name="name">SMNL - Fleet company rule</field>
+        <field name="model_id" ref="fleet.model_fleet_vehicle"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+    </record>
+
+    <record id="fleet_vehicle_odometer_multi_company_rule" model="ir.rule">
+        <field name="name">SMNL - Fleet Vehicle odometer company rule</field>
+        <field name="model_id" ref="fleet.model_fleet_vehicle_odometer"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+    </record>
+
+    <record id="fleet_vehicle_cost_company_rule" model="ir.rule">
+        <field name="name">SMNL - Fleet Vehicle cost company rule</field>
+        <field name="model_id" ref="fleet.model_fleet_vehicle_cost"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+    </record>
+
+    <record id="fleet_vehicle_contract_company_rule" model="ir.rule">
+        <field name="name">SMNL - Fleet Vehicle contract company rule</field>
+        <field name="model_id" ref="fleet.model_fleet_vehicle_log_contract"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+    </record>
+
+    <record id="fleet_vehicle_fuel_log_company_rule" model="ir.rule">
+        <field name="name">SMNL - Fleet Fuel Log company rule</field>
+        <field name="model_id" ref="fleet.model_fleet_vehicle_log_fuel"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+    </record>
+
+    <record id="fleet_vehicle_model_company_rule" model="ir.rule">
+        <field name="name">SMNL - Fleet vehicle model company rule</field>
+        <field name="model_id" ref="fleet.model_fleet_vehicle_model"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+    </record>
+
+    <record id="fleet_driver_registration_company_rule" model="ir.rule">
+        <field name="name">SMNL - Fleet driver registration company rule</field>
+        <field name="model_id" ref="smnl_fleet_extend.model_fleet_driver_registration"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+    </record>
+
+    <record id="product_template_company_rule" model="ir.rule">
+        <field name="name">SMNL - Product Template company rule</field>
+        <field name="model_id" ref="product.model_product_template"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+    </record>
+
+    <record id="res_partner_company_rule" model="ir.rule">
+        <field name="name">SMNL - Contact company rule</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+    </record> 
+</odoo>

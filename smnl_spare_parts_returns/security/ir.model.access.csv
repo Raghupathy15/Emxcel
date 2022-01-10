@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_spare_parts_returns,access_spare_parts_returns,model_spare_parts_returns,,1,1,1,1
+access_fleet_spare_parts_returns,access_fleet_spare_parts_returns,model_fleet_spare_parts_returns,,1,1,1,1
+access_spare_parts_returns_approval,access_spare_parts_returns_approval,model_spare_parts_returns_approval,,1,1,1,1

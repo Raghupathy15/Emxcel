@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Driver Registration Form -->
+    <record id="smnl_fleet_driver_registration_form" model="ir.ui.view">
+        <field name="name">fleet.driver.registration.form</field>
+        <field name="model">fleet.driver.registration</field>
+        <field name="arch" type="xml">
+            <form string="Fleet Driver Registration">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="employee_id" required="1"/>
+                            <field name="blood_group"/>
+                            <field name="contract_expiry_date"/>
+                            <field name="fleet_type" required="1"/>
+                            <field name="company_id"/>
+                        </group>
+                        <group>
+                            <field name="license_number"/>
+                            <field name="license_Type"/>
+                            <field name="license_issue_date"/>
+                            <field name="license_expiry_date"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread" options='{"thread_level": 1}'/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Driver Registration Tree -->
+    <record id="smnl_fleet_driver_registration_tree" model="ir.ui.view">
+        <field name="name">fleet.driver.registration.tree</field>
+        <field name="model">fleet.driver.registration</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="employee_id"/>
+                <field name="contract_expiry_date"/>
+                <field name="fleet_type"/>
+                <field name="license_number"/>
+                <field name="license_Type"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Driver Registration Action -->
+    <record id="action_smnl_fleet_driver_registration" model="ir.actions.act_window">
+        <field name="name">Fleet Driver Registration</field>
+        <field name="res_model">fleet.driver.registration</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="smnl_fleet_driver_registration_tree"/>
+    </record>
+
+    <!-- Driver Registration Menu -->
+    <menuitem name="Drivers" parent="fleet.menu_root" id="fleet_drivers" sequence="3"/>
+    <menuitem name="Driver Registration" action="action_smnl_fleet_driver_registration" parent="smnl_fleet_extend.fleet_drivers" id="fleet_driver_registration_menu"/>
+</odoo>

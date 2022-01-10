@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="ir_cron_auto_payslip" model="ir.cron">
+        <field name="name">Auto Payslip Creation</field>
+        <field name="model_id" ref="model_hr_payslip"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_create_auto_payslip(),model._cron_compute_auto_payslip()</field>
+        <field name="interval_type">months</field>
+        <field name="numbercall">-1</field>
+        <field eval="False" name="doall" />
+    </record>
+</odoo>

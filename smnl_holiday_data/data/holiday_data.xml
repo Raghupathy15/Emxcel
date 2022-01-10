@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Holiday list -->
+        <record id="holiday_1" model="smnl.holiday">
+            <field name="name">KANUMA</field>
+            <field name="date_from" eval="time.strftime('%Y-1-15 00:00:00')"></field>
+            <field name="date_to" eval="time.strftime('%Y-1-15 18:29:59')"></field>
+        </record>
+
+        <record id="holiday_2" model="smnl.holiday">
+            <field name="name">REPUBLIC DAY</field>
+            <field name="date_from" eval="time.strftime('%Y-1-26 00:00:00')"></field>
+            <field name="date_to" eval="time.strftime('%Y-1-26 18:29:59')"></field>
+        </record>
+        <record id="holiday_3" model="smnl.holiday">
+            <field name="name">UGADI</field>
+            <field name="date_from" eval="time.strftime('%Y-4-13 00:00:00')"></field>
+            <field name="date_to" eval="time.strftime('%Y-4-13 18:29:59')"></field>
+        </record>
+        <record id="holiday_4" model="smnl.holiday">
+            <field name="name">MAY DAY</field>
+            <field name="date_from" eval="time.strftime('%Y-5-1 00:00:00')"></field>
+            <field name="date_to" eval="time.strftime('%Y-5-1 18:29:59')"></field>
+            
+        </record>
+        <record id="holiday_5" model="smnl.holiday">
+            <field name="name">RAMZAN</field>
+            <field name="date_from" eval="time.strftime('%Y-5-12 00:00:00')"></field>
+            <field name="date_to" eval="time.strftime('%Y-5-12 18:29:59')"></field>
+            
+        </record>
+        <record id="holiday_6" model="smnl.holiday">
+            <field name="name">INDEPENDENCE DAY</field>
+            <field name="date_from" eval="time.strftime('%Y-8-15 00:00:00')"></field>
+            <field name="date_to" eval="time.strftime('%Y-8-15 18:29:59')"></field>
+            
+        </record>
+        <record id="holiday_7" model="smnl.holiday">
+            <field name="name">VINAYAKA CHATURTHI</field>
+            <field name="date_from" eval="time.strftime('%Y-9-10 00:00:00')"></field>
+            <field name="date_to" eval="time.strftime('%Y-9-10 18:29:59')"></field>
+            
+        </record>
+        <record id="holiday_8" model="smnl.holiday">
+            <field name="name">GANESH CHATURTHI</field>
+            <field name="date_from" eval="time.strftime('%Y-10-2 00:00:00')"></field>
+            <field name="date_to" eval="time.strftime('%Y-10-2 18:29:59')"></field>
+            
+        </record>
+
+
+        <!-- Optional Holiday list -->
+        <record id="holiday_9" model="smnl.holiday">
+            <field name="name">PONGAL/MAKAR SANKRANTI</field>
+            <field name="date_from" eval="time.strftime('%Y-1-14 00:00:00')"></field>
+            <field name="date_to" eval="time.strftime('%Y-1-14 18:29:59')"></field>
+            <field name="is_optional" eval="True"/>
+        </record>
+        <record id="holiday_10" model="smnl.holiday">
+            <field name="name">MAHA SHIVRATRI</field>
+            <field name="date_from" eval="time.strftime('%Y-3-11 00:00:00')"></field>
+            <field name="date_to" eval="time.strftime('%Y-3-11 18:29:59')"></field>
+            <field name="is_optional" eval="True"/>
+        </record>
+        <record id="holiday_11" model="smnl.holiday">
+            <field name="name">HOLI</field>
+            <field name="date_from" eval="time.strftime('%Y-3-29 00:00:00')"></field>
+            <field name="date_to" eval="time.strftime('%Y-3-29 18:29:59')"></field>
+            <field name="is_optional" eval="True"/>
+        </record>
+        <record id="holiday_12" model="smnl.holiday">
+            <field name="name">GOOD FRIDAY</field>
+            <field name="date_from" eval="time.strftime('%Y-4-2 00:00:00')"></field>
+            <field name="date_to" eval="time.strftime('%Y-4-2 18:29:59')"></field>
+            <field name="is_optional" eval="True"/>
+        </record>
+        <record id="holiday_13" model="smnl.holiday">
+            <field name="name">SRI RAM NAVAMI</field>
+            <field name="date_from" eval="time.strftime('%Y-4-21 00:00:00')"></field>
+            <field name="date_to" eval="time.strftime('%Y-4-21 18:29:59')"></field>
+            <field name="is_optional" eval="True"/>
+        </record>
+        <record id="holiday_14" model="smnl.holiday">
+            <field name="name">BAKRID</field>
+            <field name="date_from" eval="time.strftime('%Y-7-20 00:00:00')"></field>
+            <field name="date_to" eval="time.strftime('%Y-7-20 18:29:59')"></field>
+            <field name="is_optional" eval="True"/>
+        </record>
+        <record id="holiday_15" model="smnl.holiday">
+            <field name="name">JANMASHTAMI/SRI KRISHNA ASHTAMI </field>
+            <field name="date_from" eval="time.strftime('%Y-8-30 00:00:00')"></field>
+            <field name="date_to" eval="time.strftime('%Y-8-30 18:29:59')"></field>
+            <field name="is_optional" eval="True"/>
+        </record>
+        <record id="holiday_16" model="smnl.holiday">
+            <field name="name">VIJAYA DASHAMI</field>
+            <field name="date_from" eval="time.strftime('%Y-10-15 00:00:00')"></field>
+            <field name="date_to" eval="time.strftime('%Y-10-15 18:29:59')"></field>
+            <field name="is_optional" eval="True"/>
+        </record>
+        <record id="holiday_17" model="smnl.holiday">
+            <field name="name">DIWALI</field>
+            <field name="date_from" eval="time.strftime('%Y-11-4 00:00:00')"></field>
+            <field name="date_to" eval="time.strftime('%Y-11-4 18:29:59')"></field>
+            <field name="is_optional" eval="True"/>
+        </record>
+        <record id="holiday_18" model="smnl.holiday">
+            <field name="name">CHRISTMAS</field>
+            <field name="date_from" eval="time.strftime('%Y-12-25 00:00:00')"></field>
+            <field name="date_to" eval="time.strftime('%Y-12-25 18:29:59')"></field>
+            <field name="is_optional" eval="True"/>
+        </record>
+
+    </data>
+
+    <data noupdate="0">
+        <record id="resource.resource_calendar_std" model="resource.calendar">
+            <field name="active" eval="False"></field>
+        </record>
+    </data>
+
+    <data noupdate="1">
+        <!-- Working hours -->
+        <record id="resource_calendar_smnl_1" model="resource.calendar">
+            <field name="name">Standard 48 hours/week-Sunday off</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="hours_per_day">8.0</field>
+            <field name="attendance_ids"
+            eval="[
+                (0, 0, {'name': 'Monday', 'dayofweek': '0', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Tuesday', 'dayofweek': '1', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Wednesday', 'dayofweek': '2', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Thursday', 'dayofweek': '3', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Friday', 'dayofweek': '4', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Saturday', 'dayofweek': '5', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'})]"
+        />
+        </record>
+
+        <record id="resource_calendar_smnl_2" model="resource.calendar">
+            <field name="name"> Standard 48 hours/week-Monday off</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="hours_per_day">8.0</field>
+            <field name="attendance_ids"
+            eval="[
+                (0, 0, {'name': 'Tuesday', 'dayofweek': '1', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Wednesday', 'dayofweek': '2', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Thursday', 'dayofweek': '3', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Friday', 'dayofweek': '4', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Saturday', 'dayofweek': '5', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Sunday', 'dayofweek': '6', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'})]"
+        />
+        </record>
+
+        <record id="resource_calendar_smnl_7" model="resource.calendar">
+            <field name="name"> Standard 48 hours/week-Tuesday off</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="hours_per_day">8.0</field>
+            <field name="attendance_ids"
+            eval="[
+                (0, 0, {'name': 'Monday', 'dayofweek': '0', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Wednesday', 'dayofweek': '2', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Thursday', 'dayofweek': '3', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Friday', 'dayofweek': '4', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Saturday', 'dayofweek': '5', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Sunday', 'dayofweek': '6', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'})]"
+        />
+        </record>
+
+         <record id="resource_calendar_smnl_3" model="resource.calendar">
+            <field name="name"> Standard 48 hours/week-Wednesday off</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="hours_per_day">8.0</field>
+            <field name="attendance_ids"
+            eval="[
+                (0, 0, {'name': 'Monday', 'dayofweek': '0', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Tuesday', 'dayofweek': '1', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Thursday', 'dayofweek': '3', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Friday', 'dayofweek': '4', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Saturday', 'dayofweek': '5', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Sunday', 'dayofweek': '6', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'})]" />
+        </record>
+
+        <record id="resource_calendar_smnl_4" model="resource.calendar">
+            <field name="name"> Standard 48 hours/week-Thursday off</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="hours_per_day">8.0</field>
+            <field name="attendance_ids"
+            eval="[
+                (0, 0, {'name': 'Monday', 'dayofweek': '0', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Tuesday', 'dayofweek': '1', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Wednesday', 'dayofweek': '2', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Friday', 'dayofweek': '4', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Saturday', 'dayofweek': '5', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Sunday', 'dayofweek': '6', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'})]" />
+        </record>
+
+        <record id="resource_calendar_smnl_5" model="resource.calendar">
+            <field name="name"> Standard 48 hours/week-Friday off</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="hours_per_day">8.0</field>
+            <field name="attendance_ids"
+            eval="[
+                (0, 0, {'name': 'Monday', 'dayofweek': '0', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Tuesday', 'dayofweek': '1', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Wednesday', 'dayofweek': '2', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Thursday', 'dayofweek': '3', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Saturday', 'dayofweek': '5', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Sunday', 'dayofweek': '6', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'})]" />
+        </record>
+
+        <record id="resource_calendar_smnl_6" model="resource.calendar">
+            <field name="name"> Standard 48 hours/week-Saturday off</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="hours_per_day">8.0</field>
+            <field name="attendance_ids"
+            eval="[
+                (0, 0, {'name': 'Monday', 'dayofweek': '0', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Tuesday', 'dayofweek': '1', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Wednesday', 'dayofweek': '2', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Thursday', 'dayofweek': '3', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Friday', 'dayofweek': '4', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Sunday', 'dayofweek': '6', 'hour_from': 10, 'hour_to': 19, 'day_period': 'morning'})]" />
+        </record>
+    </data>
+</odoo>

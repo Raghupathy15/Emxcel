@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_fleet_fuel">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <br/>
+                    <div class="row">
+                        <div class="col-6">
+                            <t t-if="from_date">
+                                <b>
+                                    <span>From:</span>
+                                    <span t-esc="from_date"/>
+                                </b>
+                            </t>
+                        </div>
+                        <div class="col-6" align="right">
+                            <t t-if="to_date">
+                                <b>
+                                    <span>To:</span>
+                                    <span t-esc="to_date"/>
+                                </b>
+                            </t>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-lg-12" align="center">
+                            <h2>
+                                <span>Fleet Fuel Report</span>
+                            </h2>
+                        </div>
+                    </div>
+                    <br/>
+                    <table class="table table-sm">
+                        <thead>
+                            <tr style="border-top: 1px solid black">
+                                <th>Date</th>
+                                <th>Vehicle</th>
+                                <th>Purchaser</th>
+                                <th>Odometer Value</th>
+                                <th>Unit</th>
+                                <th>Liter</th>
+                                <th>Total Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="total" t-value="0"/>
+                            <tr t-foreach="docs" t-as="o">
+                                <td>
+                                    <span t-field="o.date"/>
+                                </td>
+                                <td>
+                                    <span t-field="o.vehicle_id"/>
+                                </td>
+                                <td>
+                                    <span t-field="o.purchaser_id"/>
+                                </td>
+                                <td>
+                                    <span t-field="o.odometer"/>
+                                </td>
+                                <td>
+                                    <span t-field="o.odometer_unit"/>
+                                </td>
+                                <td>
+                                    <span t-field="o.liter"/>
+                                </td>
+                                <td>
+                                    <span t-field="o.amount"/>
+                                    <t t-set="total" t-value="total + o.amount"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row justify-content-end">
+                        <div class="col-4">
+                            <table class="table table-sm">
+                                <tr>
+                                    <td align="right">
+                                        <b>
+                                            <span>Total&#160;&#160;</span>
+                                            <t/>
+                                            <span t-esc="total"
+                                                  t-options='{"widget": "monetary", "display_currency": res_company.currency_id}'/>
+                                        </b>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+                id="report_fleet_cost_action"
+                model="fleet.vehicle.cost"
+                name="smnl_fleet_extend.report_fleet_cost"
+                file="smnl_fleet_extend.report_fleet_cost"
+                report_type="qweb-pdf"
+                string="Fleet Cost"/>
+
+        <report
+                id="report_fleet_fuel_action"
+                model="fleet.vehicle.log.fuel"
+                name="smnl_fleet_extend.report_fleet_fuel"
+                file="smnl_fleet_extend.report_fleet_fuel"
+                report_type="qweb-pdf"
+                string="Fleet Fuel Log"/>
+    </data>
+</odoo>

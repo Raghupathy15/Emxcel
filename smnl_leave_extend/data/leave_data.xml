@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- compensation Leave for Holiday-->
+        <record id="holiday_smnl_status_comp" model="hr.leave.type">
+            <field name="name">Compensation Holiday Leave </field>
+            <field name="allocation_type">fixed_allocation</field>
+            <field name="color_name">lavender</field>
+            <field name="validity_start" eval="time.strftime('%Y-01-01')"/>
+            <field name="validity_stop" eval="time.strftime('%Y-12-31')"/>
+        </record>
+
+        <!-- Leave without pay (LWP)-->
+        <record id="smnl_leave_without_pay" model="hr.leave.type">
+            <field name="name">Leave Without Pay (LWP)</field>
+            <field name="allocation_type">no</field>
+            <field name="color_name">lavender</field>
+            <field name="validity_start" eval="time.strftime('%Y-01-01')"/>
+            <field name="validity_stop" eval="time.strftime('%Y-12-31')"/>
+            <field name="double_validation" eval="True"/>
+        </record>
+    </data>
+</odoo>

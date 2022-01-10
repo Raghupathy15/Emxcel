@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- New User for Store Manager -->
+     <record id="group_purchase_store_manager_one" model="res.groups">
+        <field name="name">Store Manager</field>
+        <field name="category_id" ref="base.module_category_purchase_management"/>
+        <field name="implied_ids" eval="[(4, ref('purchase.group_purchase_user'))]"/>
+    </record>
+
+    <!-- New User for HOD -->
+     <record id="group_purchase_hod_one" model="res.groups">
+        <field name="name">HOD</field>
+        <field name="category_id" ref="base.module_category_purchase_management"/>
+        <field name="implied_ids" eval="[(4, ref('beep_purchase.group_purchase_store_manager_one'))]"/>
+    </record>
+
+    <record id="purchase.group_purchase_user" model="res.groups">
+        <field name="name">User/ Mechanic/ Section In charge</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="category_id" ref="base.module_category_purchase_management"/>
+    </record>
+
+    <record id="purchase.group_purchase_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="base.module_category_purchase_management"/>
+        <field name="implied_ids" eval="[(4, ref('purchase.group_purchase_user')),(4, ref('beep_purchase.group_purchase_store_manager_one')),(4, ref('beep_purchase.group_purchase_hod_one'))]"/>
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>  
+
+</odoo>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="resource_calendar_form_inherits" model="ir.ui.view">
+        <field name="name">resource.calendar.form</field>
+        <field name="model">resource.calendar</field>
+        <field name="inherit_id" ref="resource.resource_calendar_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date_to']" position="after">
+                <field name="is_optional_holiday" widget='boolean_toggle' />
+            </xpath>
+            <xpath expr="//field[@name='date_from']" position="replace">
+                <field name="date_from" widget="date" />
+            </xpath>
+            <xpath expr="//field[@name='date_to']" position="replace">
+                <field name="date_to" widget="date" />
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button" type="object" name="toggle_active" icon="fa-archive">
+                    <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- smnl.holiday -->
+    <record id="smnl_holiday_form" model="ir.ui.view">
+        <field name="name">smnl.holiday.form</field>
+        <field name="model">smnl.holiday</field>
+        <field name="arch" type="xml">
+            <form string="Holiday Detail">
+                <group>
+                    <group>
+                        <field name="name" string="Reason"/>
+                        <field name="company_id"/>
+                        <field name="is_optional"/>
+                    </group>
+                    <group>
+                       <field name="date_from" widget="date"/>
+                       <field name="date_to" widget="date"/>
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="smnl_holiday_tree" model="ir.ui.view">
+        <field name="name">smnl.holiday.tree</field>
+        <field name="model">smnl.holiday</field>
+        <field name="arch" type="xml">
+            <tree string="Holiday Detail">
+                <field name="name" string="Reason"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="date_from" widget="date"/>
+                <field name="date_to" widget="date"/>
+                <field name="is_optional"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_smnl_holiday_tree" model="ir.actions.act_window">
+        <field name="name">SMNL Holiday</field>
+        <field name="res_model">smnl.holiday</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+    </record>
+
+    <!-- Menu item to create smnl Holiday from Leaves Menu -->
+    <menuitem
+        id="menu_smnl_holiday_list"
+        action="smnl_holiday_data.action_smnl_holiday_tree"
+        name="Holiday List"
+        parent="hr_holidays.menu_hr_holidays_configuration"
+        sequence="10"/>
+    
+</odoo>

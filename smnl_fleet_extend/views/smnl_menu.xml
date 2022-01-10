@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="base.action_partner_supplier_form" model="ir.actions.act_window">
+            <field name="context">{'search_default_supplier':
+                1,'search_default_type_company':1,'default_customer':0,'default_supplier': 1,'default_is_company': True}
+            </field>
+        </record>
+
+        <menuitem id="fleet_purchase" name="Purchase" parent="fleet.menu_root" groups="fleet.fleet_group_user"/>
+        <menuitem id="fleet_store" name="Store" action="base.action_partner_supplier_form" parent="fleet_purchase"
+                  sequence="1" groups="fleet.fleet_group_user"/>
+        <menuitem id="menu_fleet_purchase_rfq" action="purchase.purchase_rfq" name="Order" parent="fleet_purchase"
+                  sequence="2"/>
+    </data>
+</odoo>

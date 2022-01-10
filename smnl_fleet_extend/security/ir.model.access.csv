@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_smnl_fleet_driver_registration,access.fleet.driver.registration,model_fleet_driver_registration,,1,1,1,1
+access_smnl_fleet_type,access.fleet.type,model_fleet_type,,1,1,1,1
+access_stock_quant_all,stock.quant all users,model_stock_quant,base.group_user,1,1,1,1

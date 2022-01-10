@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="smnl_invoice_form">
+        <field name="name">smnl.invoice.form</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <field name="date_due" position="attributes">
+                <attribute name="attrs">{'invisible':[('payment_term_id', '=', False)]}</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>

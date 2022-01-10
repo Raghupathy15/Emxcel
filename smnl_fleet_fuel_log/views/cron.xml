@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--Tanker Minimum Qty Notify -->
+    <data noupdate="1">
+        <record id="ir_cron_tanker_minimum_qty" model="ir.cron">
+            <field name="name">Tanker Minimum Qty Notify</field>
+            <field name="model_id" ref="model_fleet_tanker"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_notify_min_qty()</field>
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="nextcall" eval="(DateTime.now() + timedelta()).strftime('%Y-%m-%d 04:30:00')"/>
+            <field eval="False" name="doall" />
+        </record>
+    </data>
+</odoo>

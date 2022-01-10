@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_company_form_inherit" model="ir.ui.view">
+        <field name="name">base.company.form</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form" />
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button name="action_match_partners_and_users" type="object" string="Match Partners"/>
+                    <button name="action_create_leave_allocation" type="object" string="Leave allocation for Employees"/>
+                    <button name="action_map_hr_contract" type="object" string="Map Contract" invisible="0"/>
+                </header>
+            </xpath>
+        </field>
+        </record>
+    </data>
+</odoo>

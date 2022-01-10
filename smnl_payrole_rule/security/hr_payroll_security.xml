@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_payslip_rule_officer" model="ir.rule">
+        <field name="name">SMNL-Payslip officer</field>
+        <field name="model_id" ref="model_hr_payslip"/>
+        <field name="domain_force">[('employee_id.user_id','=',user.id)]</field>
+        <field name="groups" eval="[(4,ref('hr_payroll.group_hr_payroll_user'))]"/>
+        <field name="comment">The user will be able to see own records only.</field>
+    </record>
+
+    <!-- Payroll Multi company rule -->
+    <record id="hr_payroll_comp_rule" model="ir.rule">
+        <field name="name">SMNL - HR Payroll company rule</field>
+        <field name="model_id" ref="model_hr_payslip"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',user.company_id.id),('company_id','=',False)]</field>
+    </record>
+
+</odoo>

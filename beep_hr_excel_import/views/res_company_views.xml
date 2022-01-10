@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_company_userbutton_inherit" model="ir.ui.view">
+        <field name="name">base.company.holiday.button.form</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="beep_hr.view_company_form_inherit" />
+        <field name="arch" type="xml">
+            <button name="action_create_leave_allocation" position="after">
+                <button name="action_create_user_for_xls" type="object" string="Create User for Xls" help='To create users for imported xls file' invisible="1"/>
+            </button>
+        </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<record id="inherit_fleet_vehicle_view_form_return" model="ir.ui.view">
+		<field name="name">fleet.vehicle.log.services.form</field>
+		<field name="model">fleet.vehicle.log.services</field>
+		<field name="inherit_id" ref="fleet.fleet_vehicle_log_services_view_form"/>
+		<field name="arch" type="xml">
+			<field name="vehicle_id" position="after">
+                <field name="is_returned" invisible="1"/>
+                <field name="is_spare_part" invisible="1"/>
+            </field>
+			<xpath expr="//div[@class='oe_button_box']" position="inside">
+				<button name="service_parts_return"
+					type="object"
+					class="oe_stat_button"
+					icon="fa-truck"
+					string="Spare Parts Returns"
+					attrs="{'invisible': ['|','|',('state','!=','done'),('is_spare_part','!=',True),('is_returned','=',True)]}">
+				</button>
+			</xpath>
+			
+			<div class="oe_button_box" name="button_box">
+				<button class="oe_stat_button" type="object" name="get_spare_returns" icon="fa-pencil-square-o" attrs="{'invisible': [('is_returned','!=', True)]}">
+					<field string="Return Status" name="return_count" widget="statinfo"/>
+				</button>
+			</div>
+
+		</field>
+	</record>
+</odoo>

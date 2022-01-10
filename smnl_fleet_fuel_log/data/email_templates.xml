@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Email template for Tanker notify minimum qty -->
+        <record id="email_template_tanker_minimum_qty" model="mail.template">
+            <field name="name">Tanker minimum qty notify</field>
+            <field name="subject">Tanker minimum quantity notification for ${object.name}</field>
+            <field name="email_from">noreply-erp@emxcelsolutions.com</field>
+            <field name="email_to"></field>
+            <field name="lang">${user.lang}</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="body_html"><![CDATA[
+				<p>Hi ${object.login}</p>
+				<p>Tanker master quantity is equal or below to minimum qty</p>
+				<div>
+				    <table>
+                        <tbody>
+                            <tr>
+                                <th style="width:135px">Tanker name</th>
+                                <th style="width: 85px;">Tank Capacity</td>
+                                <th style="width: 125px;">Tank Qty</th>
+                                <th style="width: 125px;">Tank Minimum level Qty</th>
+                            </tr>
+                            % for row in object.tanker_ids:
+                                <tr>
+                                    <td style="text-align: center;"> ${row.tanker_id.name}</td>
+                                    <td style="text-align: center;">${row.tanker_id.capacity}</td>
+                                    <td style="text-align: center;">${row.tanker_id.qty}</td>
+                                    <td style="text-align: center;">${row.tanker_id.notify_limit}</td>
+                                </tr>
+                            %endfor
+                        <tbody>
+                    <table>
+				</div>
+				<br/>
+				<p>Regards,</p>
+				<p><strong>ERP AUTOMATION</strong></p>
+				<p>This is a system generated email, do not reply to this email ID</p>
+			]]></field>
+        </record>
+
+
+    </data>
+</odoo>

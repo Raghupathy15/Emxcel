@@ -1,0 +1,20 @@
+{
+    'name': 'SMNL Holiday Data',
+    'version': '12.0.1.0.0',
+    'summary': 'SMNL Holiday Data',
+    'description': """smnl_holiday_data""",
+    'category': 'HR',
+    'author': 'Emxcel Solutions',
+    'website': 'https://emxcelsolutions.com/',
+    'depends': ['resource', 'hr_holidays', 'beep_hr', 'hr_payroll'],
+    'data': [
+        'security/ir.model.access.csv',
+        'data/holiday_data.xml',
+        'views/res_company_views.xml',
+        'views/resource_views.xml',
+        'views/hr_views.xml',
+    ],
+    'demo': [],
+    'installable': True,
+    'auto_install': False,
+}

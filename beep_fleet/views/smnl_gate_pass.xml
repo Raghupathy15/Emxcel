@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Gate Pass Form -->
+    <record id="smnl_gate_pass_form" model="ir.ui.view">
+        <field name="name">gate_pass.form</field>
+        <field name="model">gate.pass</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Gate Pass">
+                <header>
+                    <button name="button_print" string="Print" states="draft,approved" class="oe_highlight" type="object"/>
+                    <button name="button_approved" string="Approved" states="draft" class="oe_highlight" type="object"/>
+                    <button name="button_rejected" string="Rejected" states="draft" type="object"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,approved,rejected"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" class="oe_inline" nolabel="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="product_id" />
+                            <field name="vendor_id" />
+                            <field name="gate_pass_type" required="1"/>
+                            <field name="description"/>
+                        </group>
+                        <group>
+                            <field name="gate_pass_days"/>
+                            <field name="service_id" readonly="1"/>
+                            <field name="vehicle_id" />
+                            <field name="security_check"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Gate Pass Tree -->
+    <record id="smnl_gate_pass_tree" model="ir.ui.view">
+        <field name="name">gate_pass.tree</field>
+        <field name="model">gate.pass</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="service_id"/>
+                <field name="gate_pass_type"/>
+                <field name="product_id"/>
+                <field name="gate_pass_days"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="smnl_gate_pass_search" model="ir.ui.view">
+        <field name="name">gate.pass.search</field>
+        <field name="model">gate.pass</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <search string="Gate Pass">
+                <field name="name"/>
+                <field name="service_id"/>
+                <field name="product_id"/>
+                <filter name="groupby_gate_pass_type" context="{'group_by' : 'gate_pass_type'}" string="Gate Pass Type"/>
+                <filter name="groupby_service_id" context="{'group_by' : 'service_id'}" string="Service"/>
+                <filter name="groupby_vendor_id" context="{'group_by' : 'vendor_id'}" string="Vendor"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Gate Pass Action -->
+    <record id="action_smnl_gate_pass" model="ir.actions.act_window">
+        <field name="name">Gate Pass</field>
+        <field name="res_model">gate.pass</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="smnl_gate_pass_tree"/>
+    </record>
+
+    <!-- Gate Pass Menu -->
+    <menuitem name="Gate Pass" action="action_smnl_gate_pass" parent="stock.menu_stock_warehouse_mgmt" id="smnl_gate_pass_menu"/>
+</odoo>

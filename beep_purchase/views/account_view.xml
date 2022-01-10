@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+	   	<record id="view_invoice_inherit" model="ir.ui.view">
+			<field name="name">view.invoice.inherit</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_supplier_form"/>
+			<field name="arch" type="xml"> 
+				<xpath expr="//sheet/div" position="after">
+					<div class="oe_button_box" name="button_box">
+						<button class="oe_stat_button" type="object" name="get_receipts"  icon="fa-truck">
+							<field string="Receipts" name="receipt_count" widget="statinfo"/>
+						</button>
+					</div>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>

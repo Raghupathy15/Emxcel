@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id='fleet_tanker_view_form' model='ir.ui.view'>
+			<field name="name">fleet.tanker.form</field>
+			<field name="model">fleet.tanker</field>
+			<field name="arch" type="xml">
+				<form string="Tanker Master">
+					<sheet>
+						<div class="oe_button_box" name="button_box">
+							<button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+								<field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+							</button>
+						</div>
+						<div class="oe_title">
+							<h1>
+								<field name="name"/>
+							</h1>
+						</div>
+						<group>
+							<group>
+								<field name="driver_id" required="1"/>
+								<field name="capacity"/>
+								<field name="uom_id" readonly="1"/>
+							</group>
+							<group>
+								<field name="qty" readonly="1" force_save="1"/>
+								<field name="notify_limit"/>
+								<field name="company_id" invisible="1"/>
+							</group>
+						</group>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+
+		<record id='fleet_tanker_view_tree' model='ir.ui.view'>
+			<field name="name">fleet.tanker.tree</field>
+			<field name="model">fleet.tanker</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name"/>
+					<field name="capacity"/>
+					<field name="qty"/>
+					<field name="notify_limit"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id='fleet_tanker_action' model='ir.actions.act_window'>
+			<field name="name">Tanker Master</field>
+			<field name="res_model">fleet.tanker</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="o_view_nocontent_smiling_face">
+					Create a new Tanker details
+				</p>
+				<p>
+					Manage your Tanker vehicle reading, Parts details service details etc .,
+				</p>
+			</field>
+		</record>
+
+		<menuitem id="menu_tanker_master" name="Tanker" parent="fleet.menu_root"
+				  sequence="21"/>
+		<menuitem id="menu_tanker_details" name="Tanker Master" parent="smnl_fleet_fuel_log.menu_tanker_master"
+				  action="fleet_tanker_action"
+				  sequence="1"/>
+
+		<record model="ir.ui.view" id="smnl_view_users_form">
+            <field name="name">smnl.view.users.form</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page name="notify" string="Fleet" invisible="1">
+                        <field name="tanker_ids">
+							<tree>
+								<field name="user_id"/>
+								<field name="tanker_id"/>
+								<field name="date"/>
+							</tree>
+						</field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+	</data>
+</odoo>

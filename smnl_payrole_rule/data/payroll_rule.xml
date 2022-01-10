@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="smnl_OT" model="hr.salary.rule.category">
+            <field name="name">OT</field>
+            <field name="code">OT</field>
+        </record>
+        <record id="smnl_GP" model="hr.salary.rule.category">
+            <field name="name">Gross Payable</field>
+            <field name="code">GP</field>
+        </record>
+        <record id="smnl_Employer" model="hr.salary.rule.category">
+            <field name="name">Employer</field>
+            <field name="code">Employer</field>
+        </record>
+        <record id="smnl_CTC" model="hr.salary.rule.category">
+            <field name="name">CTC</field>
+            <field name="code">CTC</field>
+        </record>
+        <record id="smnl_Employee" model="hr.salary.rule.category">
+            <field name="name">Employee</field>
+            <field name="code">Employee</field>
+        </record>
+        <record id="smnl_TD" model="hr.salary.rule.category">
+            <field name="name">TD</field>
+            <field name="code">TD</field>
+        </record>
+        <record id="smnl_LWP" model="hr.salary.rule.category">
+            <field name="name">LWP</field>
+            <field name="code">LWP</field>
+        </record>
+
+        <record id="hr_payroll.hr_rule_basic" model="hr.salary.rule">
+            <field name="name">Basic Salary</field>
+            <field name="sequence" eval="1"/>
+            <field name="code">BASIC</field>
+            <field name="category_id" ref="hr_payroll.BASIC"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = round(contract.wage)</field>
+        </record>
+
+        <record id="hr_payroll.hr_rule_taxable" model="hr.salary.rule">
+            <field name="name">Gross</field>
+            <field name="sequence" eval="3"/>
+            <field name="code">GROSS</field>
+            <field name="category_id" ref="hr_payroll.GROSS"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = round(categories.BASIC + categories.ALW)</field>
+        </record>
+
+        <record id="hr_payroll.hr_rule_net" model="hr.salary.rule">
+            <field name="name">Net Payable</field>
+            <field name="sequence" eval="200"/>
+            <field name="code">NET</field>
+            <field name="category_id" ref="hr_payroll.NET"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">total = round(categories.GP - categories.TD)
+present = 0
+leaves = 0
+unpaid = 0
+paid = 0
+work_days = [work_line.number_of_days for work_line in payslip.worked_days_line_ids.filtered(lambda t: t.code == 'WORK100')]
+for present_line in payslip.worked_days_line_ids.filtered(lambda t: t.code == 'PRESENT'):
+   present = present_line.number_of_days if (present_line.number_of_days &lt;= work_days[0]) else work_days[0]
+# for leave_line in payslip.worked_days_line_ids.filtered(lambda t: t.code not in ['WORK100','PRESENT','Unpaid']):
+for leave_line in payslip.worked_days_line_ids.filtered(lambda t: t.code not in ['WORK100','PRESENT']):
+   leaves += leave_line.number_of_days
+for unpaid_line in payslip.worked_days_line_ids.filtered(lambda t: t.code == 'Unpaid'):
+   unpaid = unpaid_line.number_of_days
+for line in payslip.worked_days_line_ids.filtered(lambda t: t.code not in ['PRESENT','Unpaid']):
+   paid += line.number_of_days
+result = round((present+leaves)*(total/(paid+unpaid)))</field>
+            <field name="register_id" ref="hr_payroll.contrib_register_employees"/>
+        </record>
+
+        <record id="hr_rule_allowance" model="hr.salary.rule">
+            <field name="name">Allowance</field>
+            <field name="sequence" eval="2"/>
+            <field name="code">ALW</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">fix</field>
+            <field name="quantity">1.0</field>
+            <field name="amount_fix">6024.00</field>
+        </record>
+
+        <record id="hr_rule_ot" model="hr.salary.rule">
+            <field name="name">OT</field>
+            <field name="sequence" eval="4"/>
+            <field name="code">OT</field>
+            <field name="category_id" ref="smnl_OT"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = round(categories.BASIC*26/30)</field>
+        </record>
+
+        <record id="hr_rule_gp" model="hr.salary.rule">
+            <field name="name">Gross payable</field>
+            <field name="sequence" eval="5"/>
+            <field name="code">GP</field>
+            <field name="category_id" ref="smnl_GP"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = round(categories.GROSS + categories.OT)</field>
+        </record>
+
+        <record id="hr_rule_gratuity" model="hr.salary.rule">
+            <field name="name">GRATUITY</field>
+            <field name="sequence" eval="6"/>
+            <field name="code">GRATUITY</field>
+            <field name="category_id" ref="smnl_Employer"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = round(categories.BASIC/26*15*1/12)</field>
+        </record>
+
+        <record id="hr_rule_bonus" model="hr.salary.rule">
+            <field name="name">BONUS</field>
+            <field name="sequence" eval="7"/>
+            <field name="code">BONUS</field>
+            <field name="category_id" ref="smnl_Employer"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = round((categories.BASIC*8.33)/100)</field>
+        </record>
+
+        <record id="hr_rule_epf" model="hr.salary.rule">
+            <field name="name">EPFF</field>
+            <field name="sequence" eval="8"/>
+            <field name="code">EPFF</field>
+            <field name="category_id" ref="smnl_Employer"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = round((categories.GROSS*13)/100)</field>
+        </record>
+
+        <record id="hr_rule_esi" model="hr.salary.rule">
+            <field name="name">Employees’ State Insurance</field>
+            <field name="sequence" eval="9"/>
+            <field name="code">ESI</field>
+            <field name="category_id" ref="smnl_Employer"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = round((categories.GROSS*0.75)/100) if (categories.GROSS &lt;= 21000) else 0</field>
+        </record>
+
+        <record id="hr_rule_cvr_maint" model="hr.salary.rule">
+            <field name="name">CVR MAINT</field>
+            <field name="sequence" eval="10"/>
+            <field name="code">CVR MAINT</field>
+            <field name="category_id" ref="smnl_Employer"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">fix</field>
+            <field name="quantity">1.0</field>
+            <field name="amount_fix">200.00</field>
+        </record>
+
+        <record id="hr_rule_cvr_rent" model="hr.salary.rule">
+            <field name="name">CVR RENT</field>
+            <field name="sequence" eval="11"/>
+            <field name="code">CVR</field>
+            <field name="category_id" ref="smnl_Employer"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">fix</field>
+            <field name="quantity">1.0</field>
+            <field name="amount_fix">500.00</field>
+        </record>
+
+        <record id="hr_rule_food_exp" model="hr.salary.rule">
+            <field name="name">FOOD EXP-SMNL</field>
+            <field name="sequence" eval="12"/>
+            <field name="code">FOOD EXP</field>
+            <field name="category_id" ref="smnl_Employer"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">fix</field>
+            <field name="quantity">1.0</field>
+            <field name="amount_fix">3650.00</field>
+        </record>
+
+        <record id="hr_rule_tracst" model="hr.salary.rule">
+            <field name="name">TRANSPORT COST</field>
+            <field name="sequence" eval="13"/>
+            <field name="code">TRACST</field>
+            <field name="category_id" ref="smnl_Employer"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = 800</field>
+        </record>
+
+        <record id="hr_rule_ctc" model="hr.salary.rule">
+            <field name="name">CTC</field>
+            <field name="sequence" eval="14"/>
+            <field name="code">CTC</field>
+            <field name="category_id" ref="smnl_CTC"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = round(categories.GP + categories.Employer)</field>
+        </record>
+
+        <record id="hr_rule_emp_epf" model="hr.salary.rule">
+            <field name="name">EPF</field>
+            <field name="sequence" eval="15"/>
+            <field name="code">EPF</field>
+            <field name="category_id" ref="smnl_Employee"/>
+            <field name="condition_select">range</field>
+            <field name="condition_range">categories.BASIC</field>
+            <field name="condition_range_min">15000.00</field>
+            <field name="condition_range_max">150000.00</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = round((15000*12)/100) if (categories.BASIC &lt; 15000) else 1800
+            </field>
+        </record>
+
+        <record id="hr_rule_total_deduction" model="hr.salary.rule">
+            <field name="name">Total Deduction</field>
+            <field name="sequence" eval="16"/>
+            <field name="code">TD</field>
+            <field name="category_id" ref="smnl_TD"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">fix</field>
+            <field name="quantity">1.0</field>
+            <field name="amount_fix">2127.00</field>
+        </record>
+
+        <record id="hr_rule_lwp" model="hr.salary.rule">
+            <field name="name">Leave Without Pay</field>
+            <field name="sequence" eval="17"/>
+            <field name="code">LWP</field>
+<!--            <field name="category_id" ref="smnl_LWP"/>-->
+            <field name="category_id" ref="smnl_TD"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">total = round(categories.GP - categories.TD)
+unpaid = 0
+paid = 0
+for unpaid_line in payslip.worked_days_line_ids.filtered(lambda t: t.code == 'Unpaid'):
+   unpaid = unpaid_line.number_of_days
+for line in payslip.worked_days_line_ids.filtered(lambda t: t.code not in ['PRESENT','Unpaid']):
+   paid += line.number_of_days
+result = round(unpaid*(total/(paid+unpaid)))</field>
+        </record>
+
+        <record id="payroll_structure_base" model="hr.payroll.structure">
+            <field name="code">PAYROLL</field>
+            <field name="name">PAYROLL structures</field>
+            <field eval="[(6, 0, [ref('hr_payroll.hr_rule_basic'), ref('hr_payroll.hr_rule_taxable'),
+            ref('hr_payroll.hr_rule_net'),ref('hr_rule_allowance'),ref('hr_rule_ot'),ref('hr_rule_gp'),
+            ref('hr_rule_gratuity'),ref('hr_rule_bonus'),ref('hr_rule_epf'),ref('hr_rule_esi'),ref('hr_rule_cvr_maint'),
+            ref('hr_rule_cvr_rent'),ref('hr_rule_food_exp'),ref('hr_rule_tracst'),ref('hr_rule_ctc'),
+            ref('hr_rule_emp_epf'),ref('hr_rule_total_deduction'),ref('hr_rule_lwp')])]" name="rule_ids"/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+    </data>
+</odoo>

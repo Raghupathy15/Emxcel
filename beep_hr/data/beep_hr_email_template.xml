@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Email template for employee contract notification -->
+        <record id="email_template_employee_contract_notification" model="mail.template">
+            <field name="name">employee contract notification</field>
+            <field name="subject">Employee contract notification</field>
+            <field name="email_from">noreply-erp@emxcelsolutions.com</field>
+            <field name="email_to">${object.email|safe}</field>
+            <field name="lang">${user.lang}</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="body_html"><![CDATA[
+				<p>Dear HR Manager,</p>
+				<p>Below mentioned employee contract need to be update.</p>
+				<table>
+				<thead>
+				<tr>
+                    <th>Name</th>
+                    <th>Employee Code</th>
+                </tr>
+				</thead>
+				<tbody>
+                    % for emp in ctx.get('non_contract_emp_name'):
+                        <tr>
+                            <td>${emp.name}</td>
+                            <td>${emp.emp_code}</td>
+                        </tr>
+                    % endfor
+                </tbody>
+                </table>
+                <br/>
+				<p>Regards,</p>
+				<p><strong>ERP AUTOMATION</strong></p>
+				<p>This is a system generated email, do not reply to this email ID</p>
+            			]]></field>
+
+        </record>
+    </data>
+</odoo>

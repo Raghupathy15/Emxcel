@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_inventory_form_inherit" model="ir.ui.view">
+            <field name="name">stock.inventory.form</field>
+            <field name="model">stock.inventory</field>
+            <field name="inherit_id" ref="stock.view_inventory_form"/>
+            <field name="arch" type="xml">
+
+                <field name="product_id" position="after">
+                    <field name="is_fleet" invisible="1"/>
+                </field>
+
+                <xpath expr="//field[@name='theoretical_qty']" position="before">
+                    <field name="is_fleet" invisible="1"/>
+                    <field name="engine_no"
+                           attrs="{'readonly':[('fleet_id', '!=', False)], 'column_invisible':[('parent.is_fleet', '=', False)]}"
+                           force_save="1"/>
+                    <field name="reg_no"
+                           attrs="{'readonly':[('fleet_id', '!=', False)], 'column_invisible':[('parent.is_fleet', '=', False)]}"
+                           force_save="1"/>
+                    <field name="fleet_id" invisible="1"/>
+                </xpath>
+                <field name="prod_lot_id" position="replace">
+                    <field name="prod_lot_id" domain="[('product_id', '=', product_id)]" required="1"
+                           context="{'default_product_id': product_id}" groups="stock.group_production_lot"
+                           attrs="{'readonly':[('fleet_id', '!=', False)], 'column_invisible':[('parent.is_fleet', '=', True)]}"
+                           force_save="1"/>
+                </field>
+                <field name="prod_lot_id" position="after">
+                    <field name="fleet_chassis_id" domain="[('product_id', '=', product_id)]"
+                           context="{'default_product_id': product_id}" groups="stock.group_production_lot"
+                           attrs="{'readonly':[('fleet_id', '!=', False)], 'required':[('parent.is_fleet', '=', True)],'column_invisible':[('parent.is_fleet', '=', False)]}"
+                           force_save="1"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

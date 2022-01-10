@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="smnl_timesheet_view_form_user_form" model="ir.ui.view">
+            <field name="name">smnl.timesheet.view.form.user.form</field>
+            <field name="model">account.analytic.line</field>
+            <field name="inherit_id" ref="hr_timesheet.timesheet_view_form_user"/>
+            <field name="arch" type="xml">
+                <field name="date" position="replace"/>
+                <field name="unit_amount" position="before">
+                    <field name="date"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="smnl_hr_timesheet_line_tree" model="ir.ui.view">
+            <field name="name">smnl.hr.timesheet.line.tree</field>
+            <field name="model">account.analytic.line</field>
+            <field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_tree"/>
+            <field name="arch" type="xml">
+                <field name="date" position="replace"/>
+                <field name="name" position="after">
+                    <field name="date"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

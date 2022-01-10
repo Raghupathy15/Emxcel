@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+<!--        <record id="beep_res_config_settings_view_form" model="ir.ui.view">-->
+<!--            <field name="name">beep.res.config.settings.view.form.inherit.hr.timesheet</field>-->
+<!--            <field name="model">res.config.settings</field>-->
+<!--            <field name="inherit_id" ref="hr_timesheet.res_config_settings_view_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//div[@class='app_settings_block']/" position="replace">-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+        <!--        Odoo Apps By Author-->
+        <record id="beep_ir_module_module" model="ir.ui.view">
+            <field name="name">beep.ir.module.module</field>
+            <field name="model">ir.module.module</field>
+            <field name="inherit_id" ref="base.module_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/div/h3" position="replace">
+                    <h3 class="oe_fade">
+                        By BeepERP
+                    </h3>
+                </xpath>
+                <field name="website" position="replace">
+                    <field name="company_website" widget="url"/>
+                </field>
+            </field>
+        </record>
+        <!--       Odoo Preference in Users -->
+        <record id="beep_res_users_view_form_preferences" model="ir.ui.view">
+            <field name="name">beep.res.users.view.form.preferences.mail_bot</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="mail.view_users_form_simple_modif_mail"/>
+            <field name="arch" type="xml">
+                <field name="odoobot_state" position="replace">
+                    <field name="odoobot_state" readonly="0" groups="base.group_no_one" string="Beepbot Status"/>
+                </field>
+            </field>
+        </record>
+        <!--       Odoo Live chat -->
+        <!-- <record id="beep_im_livechat_channel" model="ir.ui.view">
+            <field name="name">beep.im.livechat.channel</field>
+            <field name="model">im_livechat.channel</field>
+            <field name="inherit_id" ref="im_livechat.im_livechat_channel_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//p[@class='text-muted']" position="replace">
+                    <p class="text-muted">
+                        Operators that do not show any activity In Beep ERP for more than 30 minutes will be considered
+                        as disconnected.
+                    </p>
+                </xpath>
+                <xpath expr="//page[3]/group/div/p[3]" position="replace">
+                    <p>For websites built with the Beep ERP CMS, please install the website_livechat module. Then go to
+                        Website &gt; Configuration &gt; Settings and select the Website Live Chat Channel you want to
+                        add on your website.
+                    </p>
+                </xpath>
+            </field>
+        </record> -->
+        <!--  -->
+
+        <record id="hr_timesheet.res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.hr.timesheet</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="55"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" data-string="Timesheets" string="Timesheets" data-key="hr_timesheet" groups="hr_timesheet.group_timesheet_manager">
+                    <h2>Time Encoding</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box" attrs="{'invisible':[('project_time_mode_id', '!=', False)]}">
+                            <div class="o_setting_right_pane">
+                                <label for="project_time_mode_id"/>
+                                <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." groups="base.group_multi_company"/>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="project_time_mode_id" options="{'no_create': True, 'no_open': True}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="timesheet_encode_uom_id"/>
+                                <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." groups="base.group_multi_company"/>
+                                <div class="row">
+                                    <div class="text-muted col-md-12">
+                                        Set time unit used to record your timesheets
+                                    </div>
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="timesheet_encode_uom_id" options="{'no_create': True}" required="1"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="module_project_timesheet_synchro" widget="upgrade_boolean"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="module_project_timesheet_synchro"/>
+                                <div class="text-muted">
+                                    Synchronize time spent with web/mobile app
+                                </div>
+                                <div class="content-group">
+                                    <div class="row mt16 oe_center">
+                                        <div class="col-lg-4">
+                                            <a href="http://www.odoo.com/page/timesheet?platform=chrome">
+                                                <img alt="Google Chrome Store" class="img img-fluid" src="project/static/src/img/chrome_store.png"/>
+                                            </a>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <a href="http://www.odoo.com/page/timesheet?platform=ios">
+                                                <img alt="Apple App Store" class="img img-fluid" src="project/static/src/img/app_store.png"/>
+                                            </a>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <a href="http://www.odoo.com/page/timesheet?platform=android">
+                                                <img alt="Google Play Store" class="img img-fluid" src="project/static/src/img/play_store.png"/>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div name="section_leaves" groups="base.group_no_one">
+                        <h2>Leaves</h2>
+                        <div class="row mt16 o_settings_container" name="timesheet_control">
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="o_setting_left_pane">
+                                    <field name="module_project_timesheet_holidays"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="module_project_timesheet_holidays"/>
+                                    <div class="text-muted">
+                                        Validated leaves create timesheets automatically.
+                                    </div>
+                                    <div class="content-group">
+                                        <div id="module_project_timesheet_holidays"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+        </record>
+    </data>    
+</odoo>

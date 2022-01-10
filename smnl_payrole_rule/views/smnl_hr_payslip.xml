@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record model="ir.ui.view" id="smnl_view_hr_payslip_inherit_form">
+		<field name="name">smnl.hr.payslip.inherit.form</field>
+		<field name="model">hr.payslip</field>
+		<field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+		<field name="arch" type="xml">
+			<field name="payslip_count" position="attributes">
+				<attribute name="string">Computed Payslip</attribute>
+			</field>
+			<field name="date_from" position="before">
+				<div>
+					<field name="month"  attrs="{'readonly':[('state','!=','draft')]}" class="oe_inline"/> - <field name="year"  attrs="{'readonly':[('state','!=','draft')]}" placeholder="Year" 
+					class="oe_inline"/>
+				</div>
+			</field>
+			<field name="date_from" position="attributes">
+				<attribute name="attrs">{'required': False, 'readonly': True}</attribute>
+			</field>
+			<field name="date_to" position="attributes">
+				<attribute name="attrs">{'required': False, 'readonly': True}</attribute>
+			</field>
+			<xpath expr="//field[@name='number']" position="after">
+				<field name="govt_basic" attrs="{'readonly':[('state','!=','draft')]}"/>
+			</xpath>
+			<notebook position="inside">
+				<page string="Remaining Leaves">
+					<group>
+						<group>
+							<field name="remaining_cl"/>
+							<field name="remaining_pl"/>
+						</group>
+						<group>
+							<field name="remaining_sl"/>
+							<field name="remaining_spl"/>
+						</group>
+					</group>
+				</page>
+			</notebook>
+		</field>
+	</record>
+
+	<record id="inherit_view_hr_payslip_tree" model="ir.ui.view">
+		<field name="name">hr.payslip.inherit</field>
+		<field name="model">hr.payslip</field>
+		<field name="inherit_id" ref="hr_payroll.view_hr_payslip_tree"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='employee_id']" position="after">
+				<field name="emp_code" />
+			</xpath>
+		</field>
+	</record>
+
+	<record id="inherit_view_hr_payslip_filter" model="ir.ui.view">
+		<field name="name">hr.payslip.inherit</field>
+		<field name="model">hr.payslip</field>
+		<field name="inherit_id" ref="hr_payroll.view_hr_payslip_filter"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='employee_id']" position="after">
+				<field name="emp_code" />
+			</xpath>
+		</field>
+	</record>
+	
+</odoo> 

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="report_wizard_view_form" model="ir.ui.view">
+            <field name="name">report_wizard_view_form.form</field>
+            <field name="model">wizard.payslip.report</field>
+            <field name="arch" type="xml">
+                <form string="Select period">
+                    <group>
+                        <group >
+                            <label for="date_from" string="Period"/>
+                            <div class="o_row">
+                                <field name="month" class="oe_inline"/> - <field name="year" class="oe_inline"/>
+                            </div>
+                            <label for="date_from" string=""/>
+                            <div class="o_row">
+                                <field name="date_from" readonly="1" force_save="1"/> - <field name="date_to" readonly="1" force_save="1"/>
+                            </div>
+                        </group>
+                        <group>
+                            <field name="company_id" options='{"no_open": True}'/>
+                        </group>
+                    </group>
+
+                    <footer>
+                        <button name="print_payslip_report_xls" type="object" string="Print XL Report" class="oe_highlight"/>
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="payslip_report_action_window_1">
+            <field name="name">Payslip Excel Report</field>
+            <field name="res_model">wizard.payslip.report</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="view_type">form</field>
+        </record>
+
+        <menuitem id="menu_payroll_reports" name="Reports" parent="hr_payroll.menu_hr_payroll_root"/>
+
+        <menuitem id="menu_payslip_reports" action="payslip_report_action_window_1" name="Payslip Excel Report" parent="menu_payroll_reports"/>
+
+    </data>
+</odoo>

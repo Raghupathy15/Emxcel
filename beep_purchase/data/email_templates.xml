@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Email template for the button Request Store Manager 1st Approval-->
+        <record id="email_template_button_sm_request" model="mail.template">
+            <field name="name">Request Store Manager 1st Approval</field>
+            <field name="subject">Reg:New PR Created</field>
+            <field name="email_from">${user.email}</field>
+            <field name="lang">${user.lang}</field>
+            <field name="model_id" ref="beep_purchase.model_purchase_order"/>
+            <field name="body_html"><![CDATA[
+                <p>Hai,</p>
+                <p>A new PR is created and waiting for SM Approval</p>
+                <div>
+                    <p>PR No: ${object.pr_sequence}</p>
+                    <p>Order Date: ${object.date_order}</p>
+                </div>
+                <br/>
+                <p>Regards,</p>
+                <p><strong>ERP AUTOMATION</strong></p>
+                <p>This is a system generated email, please do not reply to this.</p>
+            ]]></field>
+        </record>
+
+        <!-- Email template for the button Request Store Manager 1st Approval-->
+        <record id="email_template_button_sm_approval" model="mail.template">
+            <field name="name">Request Store Manager 1st Approval done</field>
+            <field name="subject">Reg:Store Manager Approved the PR</field>
+            <field name="email_from">${user.email}</field>
+            <field name="lang">${user.lang}</field>
+            <field name="model_id" ref="beep_purchase.model_purchase_order"/>
+            <field name="body_html"><![CDATA[
+                <p>Hai,</p>
+                <p>Store Manager 1st level approval is done</p>
+                <div>
+                    <p>PR No: ${object.pr_sequence}</p>
+                    <p>Order Date: ${object.date_order}</p>
+                    <p>PR Created by: ${object.create_uid.name}</p>
+                </div>
+                <br/>
+                <p>Regards,</p>
+                <p><strong>ERP AUTOMATION</strong></p>
+                <p>This is a system generated email, please do not reply to this.</p>
+            ]]></field>
+        </record>
+
+        <!-- Email template for the button HOD Approval-->
+        <record id="email_template_button_hod_approval" model="mail.template">
+            <field name="name">HOD Approval</field>
+            <field name="subject">Reg:HOD Approved the PR</field>
+            <field name="email_from">${user.email}</field>
+            <field name="lang">${user.lang}</field>
+            <field name="model_id" ref="beep_purchase.model_purchase_order"/>
+            <field name="body_html"><![CDATA[
+                <p>Hai,</p>
+                <p>HOD approval for the below PR done.</p>
+                <div>
+                    <p>PR No: ${object.pr_sequence}</p>
+                    <p>Order Date: ${object.date_order}</p>
+                    <p>PR Created by: ${object.create_uid.name}</p>
+                </div>
+                <br/>
+                <p>Regards,</p>
+                <p><strong>ERP AUTOMATION</strong></p>
+                <p>This is a system generated email, please do not reply to this.</p>
+            ]]></field>
+        </record>
+
+        <!-- Email template for the button Request Store Manager 2nd Approval-->
+        <record id="email_template_button_sm_approval_2" model="mail.template">
+            <field name="name">Request Store Manager 2nd Approval done</field>
+            <field name="subject">Reg:Store Manager Approved the PR</field>
+            <field name="email_from">${user.email}</field>
+            <field name="lang">${user.lang}</field>
+            <field name="model_id" ref="beep_purchase.model_purchase_order"/>
+            <field name="body_html"><![CDATA[
+                <p>Hai,</p>
+                <p>Store Manager 2nd level approval is done.</p>
+                <div>
+                    <p>PR No: ${object.pr_sequence}</p>
+                    <p>Order Date: ${object.date_order}</p>
+                    <p>PR Created by: ${object.create_uid.name}</p>
+                </div>
+                <br/>
+                <p>Regards,</p>
+                <p><strong>ERP AUTOMATION</strong></p>
+                <p>This is a system generated email, please do not reply to this.</p>
+            ]]></field>
+        </record>
+
+        <!-- Email template for the button PR Cancelled-->
+        <record id="email_template_pr_cancell" model="mail.template">
+            <field name="name">PR cancelled</field>
+            <field name="subject">Reg:PR Cancelled</field>
+            <field name="email_from">${user.email}</field>
+            <field name="lang">${user.lang}</field>
+            <field name="model_id" ref="beep_purchase.model_purchase_order"/>
+            <field name="body_html"><![CDATA[
+                <p>Hai,</p>
+                <p>The PR is cancelled. kindly find the details below.</p>
+                <div>
+                    <p>PO No: ${object.name}</p>
+                    <p>Order Date: ${object.date_order}</p>
+                    <p>PR Created by: ${object.create_uid.name}</p>
+                    <p>Cancelled by: ${object.write_uid.name}</p>
+                    <p>Cancel Remarks: ${object.cancel_remarks}</p>
+                </div>
+                <br/>
+                <p>Regards,</p>
+                <p><strong>ERP AUTOMATION</strong></p>
+                <p>This is a system generated email, please do not reply to this.</p>
+            ]]></field>
+        </record>
+    </data>
+</odoo>

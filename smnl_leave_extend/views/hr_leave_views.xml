@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record model="ir.ui.view" id="smnl_hr_leave_view_form">
+		<field name="name">smnl.hr.leave.inherit.form</field>
+		<field name="model">hr.leave</field>
+		<field name="inherit_id" ref="hr_holidays.hr_leave_view_form"/>
+		<field name="arch" type="xml">
+			<button name="action_refuse" position="replace">
+				<button string="Refuse" name="action_refuse" type="object"
+						attrs="{'invisible': ['|', ('can_approve', '=', False), ('state', 'not in', ('confirm','validate','validate1'))]}"
+						groups="base.group_system"/>
+			</button>
+			<button name="action_draft" position="replace">
+				<button string="Reset to Draft" name="action_draft" type="object"
+						attrs="{'invisible': ['|', ('can_reset', '=', False), ('state', 'not in', ['confirm', 'refuse'])]}"
+						groups="base.group_system"/>
+			</button>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="smnl_hr_leave_manager_view_form">
+		<field name="name">smnl.hr.leave.manager.inherit.form</field>
+		<field name="model">hr.leave</field>
+		<field name="inherit_id" ref="hr_holidays.hr_leave_view_form_manager"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='name']" position="after">
+				<field name="is_special_leave" invisible="1"/>
+				<field name="attach_medical_certificate" invisible="1"/>
+        		<field widget="binary" height="64" name="medical_certificate" filename="attach_medical_certificate"  attrs="{'invisible': [('is_special_leave', '!=', True)],'required': [('is_special_leave', '=', True)]}"/>
+			</xpath>
+			<xpath expr="//field[@name='payslip_status']" position="after">
+				<field name="company_id"/>
+			</xpath>
+			<button name="action_approve" position="before">
+				<button string="Create Special Leave" name="action_create_special_leaves" type="object" invisible="1"/>
+			</button>
+			<button name="action_refuse" position="replace">
+				<button string="Refuse" name="action_refuse" type="object"
+						attrs="{'invisible': ['|', ('can_approve', '=', False), ('state', 'not in', ('confirm','validate','validate1'))]}"
+						groups="base.group_system"/>
+			</button>
+			<button name="action_draft" position="replace">
+				<button string="Reset to Draft" name="action_draft" type="object"
+						attrs="{'invisible': ['|', ('can_reset', '=', False), ('state', 'not in', ['confirm', 'refuse'])]}"
+						groups="base.group_system"/>
+			</button>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="smnl_edit_holiday_status_form">
+		<field name="name">smnl.hr.leave.type.inherit.form</field>
+		<field name="model">hr.leave.type</field>
+		<field name="inherit_id" ref="hr_holidays.edit_holiday_status_form"/>
+		<field name="arch" type="xml">
+			<field name="validity_start" position="attributes">
+				<attribute name="attrs">{'required': True}</attribute>
+			</field>
+			<field name="validity_stop" position="attributes">
+				<attribute name="attrs">{'required': True}</attribute>
+			</field>
+		</field>
+	</record>
+	<record model="ir.ui.menu" id="hr_holidays.menu_open_allocation">
+		<field name="groups_id" eval="[(6, 0, [ref('hr.group_hr_manager')])]"/>
+	</record>
+	<record model="ir.ui.menu" id="hr_holidays.menu_hr_holidays_approvals">
+		<field name="groups_id" eval="[(6, 0, [ref('hr_holidays.group_hr_holidays_manager')])]"/>
+	</record>
+	<record model="ir.ui.menu" id="hr_holidays.menu_hr_holidays_report">
+		<field name="groups_id" eval="[(6, 0, [ref('hr_holidays.group_hr_holidays_manager')])]"/>
+	</record>
+	<record model="ir.ui.menu" id="hr_holidays.menu_hr_holidays_configuration">
+		<field name="groups_id" eval="[(6, 0, [ref('hr.group_hr_manager')])]"/>
+	</record>
+	<record model="ir.ui.menu" id="hr_holidays.hr_holidays_menu_manager_all">
+		<field name="groups_id" eval="[(6, 0, [ref('hr.group_hr_manager')])]"/>
+	</record>
+	<record model="ir.ui.menu" id="hr_holidays.hr_holidays_menu_manager_payroll">
+		<field name="groups_id" eval="[(6, 0, [ref('hr.group_hr_manager')])]"/>
+	</record>
+
+	<record id="ingerit_hr_leave_view_tree" model="ir.ui.view">
+		<field name="name">hr.leave.inherit</field>
+		<field name="model">hr.leave</field>
+		<field name="inherit_id" ref="hr_holidays.hr_leave_view_tree"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='employee_id']" position="after">
+				<field name="emp_code" />
+			</xpath>
+		</field>
+	</record>
+
+	<record id="inherit_hr_leave_view_filter" model="ir.ui.view">
+		<field name="name">hr.leave.inherit</field>
+		<field name="model">hr.leave</field>
+		<field name="inherit_id" ref="hr_holidays.view_hr_holidays_filter"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='employee_id']" position="after">
+				<field name="emp_code" />
+			</xpath>
+		</field>
+	</record>
+	
+</odoo>

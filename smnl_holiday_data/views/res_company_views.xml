@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Add button to assign holiday to working schedule -->
+        <record id="view_company_holidaybutton_form_inherit" model="ir.ui.view">
+        <field name="name">base.company.holiday.button.form</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="beep_hr.view_company_form_inherit" />
+        <field name="arch" type="xml">
+            <button name="action_match_partners_and_users" position="after">
+                <button name="action_assign_holiday_leave" help="Apply holiday list of holiday to working schedule" type="object" string="Apply Holiday List"/>
+            </button>
+        </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="smnl_fleet_vehicle_state_view_tree">
+            <field name="name">smnl.fleet.vehicle.state.view.tree</field>
+            <field name="model">fleet.vehicle.state</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_state_view_tree"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="draft_state"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

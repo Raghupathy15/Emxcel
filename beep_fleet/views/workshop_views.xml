@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id='fleet_workshop_view_form' model='ir.ui.view'>
+        <field name="name">fleet.workshop.form</field>
+        <field name="model">fleet.workshop</field>
+        <field name="arch" type="xml">
+            <form string="Job Orders">
+                <header>
+                    <button name="action_create_job" class="oe_highlight" type="object" string="Create Job Order"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" name="get_service_logs" icon="fa-wrench">
+                            <field string="Job orders" name="service_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="company_id"/>
+                        </group>
+                        <group>
+                            <field name="assign_id" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread" options='{"thread_level": 1}'/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id='fleet_workshop_view_tree' model='ir.ui.view'>
+        <field name="name">fleet.workshop.tree</field>
+        <field name="model">fleet.workshop</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="assign_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id='fleet_workshop_action' model='ir.actions.act_window'>
+        <field name="name">Workshop</field>
+        <field name="res_model">fleet.workshop</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Wordshop details
+            </p>
+            <p>
+                Manage your Workshop vehicle reading, Parts details service details etc .,
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menus_fleet_workshop" name="Workshop" parent="fleet.menu_root" sequence="2"/>
+    <menuitem id="menu_workshop_details" name="Workshop" parent="menus_fleet_workshop" action="fleet_workshop_action"
+              sequence="1"/>
+
+</odoo>

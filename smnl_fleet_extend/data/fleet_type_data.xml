@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+		<record id="fleet_type_1" model="fleet.type">
+            <field name="name">Excavators</field>
+            <field name="code">excavators</field>
+        </record>
+
+        <record id="fleet_type_2" model="fleet.type">
+            <field name="name">Wheel loaders</field>
+            <field name="code">wheel_loaders</field>
+        </record>
+
+        <record id="fleet_type_3" model="fleet.type">
+            <field name="name">Dumpers</field>
+            <field name="code">dumpers</field>
+        </record>
+	</data>
+</odoo>

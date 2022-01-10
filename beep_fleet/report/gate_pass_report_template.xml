@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_gate_pass">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="row">
+                            <div class="col-lg-12" align="center">
+                                <h2>
+                                    <span>Gate Pass Report</span>
+                                </h2>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <h3>Gate Pass  <span t-esc="o.name"/></h3>
+                            </div>
+                            <div class="col-md-6">
+                                <strong> Service: </strong><span t-esc="o.service_id.name"/>
+                            </div>
+                            <div class="col-md-6">
+                                <strong>Vehicle: </strong><span t-esc="o.vehicle_id.name"/>
+                            </div>
+                            <div class="col-md-6">
+                                <strong>Vendor: </strong><span t-esc="o.vendor_id.name"/>
+                            </div>
+                            <div class="col-md-6">
+                                <t t-set="values" t-value="dict([('return','Returnable'),('non_return','Non returnable'), (False,False)])"/> 
+
+                                <strong>Gate Pass type: </strong><t t-esc="values[o.gate_pass_type]"/>
+                            </div>
+                            <div class="col-md-6">
+                                <strong>Gate Pass Validity (in Days): </strong><span t-esc="o.gate_pass_days"/>
+                            </div>
+                            <div class="col-md-6">
+                                <strong>Description: </strong><span t-esc="o.description"/>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Sequences for Fleet Vehicle Log Service -->
+        <record id="seq_vehicle_log_service" model="ir.sequence">
+            <field name="name">Vehicle Log Service</field>
+            <field name="code">fleet.vehicle.log.services</field>
+            <field name="prefix">FL/SER/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Sequences for Fleet Spare-Part Purchase Requisition-->
+        <record id="seq_vehicle_spare_part_requisition" model="ir.sequence">
+            <field name="name">Vehicle Spare-part requisition</field>
+            <field name="code">fleet.vehicle.spare.part.requisition</field>
+            <field name="prefix">SP/REQ/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Sequences for Fleet Gate Pass-->
+        <record id="seq_fleet_gate_pass" model="ir.sequence">
+            <field name="name">Gate Pass</field>
+            <field name="code">gate.pass</field>
+            <field name="prefix">GP/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Demo data for Repair/Maintenance Type-->
+        <record id="repair_maintenance_type_1" model="repair.maintenance.type">
+            <field name="name">Breakdown</field>
+            <field name="is_breakdown" eval="True"/>
+        </record>
+
+        <record id="repair_maintenance_type_2" model="repair.maintenance.type">
+            <field name="name">Routine/Periodic Maintenance</field>
+        </record>
+
+        <record id="breakdown_type_1" model="breakdown.type">
+            <field name="name">Major</field>
+        </record>
+
+        <record id="breakdown_type_2" model="breakdown.type">
+            <field name="name">Minor</field>
+        </record>
+    </data>
+</odoo>

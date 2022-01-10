@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="smnl_fleet_product_normal_form_view">
+            <field name="name">smnl.fleet.product.normal.form.view</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='options']" position="after">
+                    <div>
+                        <field name="is_fleet" readonly="1" force_save="1"/>
+                        <label for="is_fleet"/>
+                    </div>
+                    <div>
+                        <field name="fleet_type" placeholder="Fleet Type" readonly="1" force_save="1"
+                               attrs="{'invisible': [('is_fleet', '=', False)], 'required': [('is_fleet', '!=', False)]}"/>
+
+                    </div>
+                    <div>
+                        <field name="fleet_model_id" placeholder="Fleet Model" readonly="1" force_save="1"
+                               attrs="{'invisible': [('is_fleet', '=', False)], 'required': [('is_fleet', '!=', False)]}"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="smnl_fleet_product_template_only_form_view">
+            <field name="name">smnl.fleet.product.template.only.form.view</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <label for="purchase_ok" position="after">
+                    <div attrs="{'invisible': [('fleet_model_id','=', False)]}">
+                        <field name="is_fleet" attrs="{'invisible': [('fleet_model_id','=', False)]}"/>
+                        <label for="is_fleet" attrs="{'invisible': [('fleet_model_id','=', False)]}"/>
+                        <br/>
+                        <field name="fleet_model_id"/>
+                        <br/>
+                        <field name="fleet_type" attrs="{'invisible': [('fleet_model_id','=', False)]}"/>
+                    </div>
+                </label>
+                <xpath expr="//page[@name='general_information']" position="after">
+                    <page name="fleet" string="Fleet" attrs="{'invisible': [('is_fleet', '=', False)]}">
+                        <field name="fleet_ids"/>
+                    </page>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,94 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="smnl_part_product_template_kanban_stock_view">
+            <field name="name">SMNL Part Product Template Kanban Stock</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_kanban_view"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="part_number"/>
+                </field>
+
+                <xpath expr="//strong[hasclass('o_kanban_record_title')]" position="after">
+                    <ul>
+                        <small t-if="record.part_number.value">
+                            <li>
+                                <strong class="o_kanban_record_title">Part Number: <field name="part_number"/></strong>
+                            </li>
+                        </small>
+                    </ul>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="smnl_product_part_product_template_only_form_view">
+            <field name="name">smnl.product.part.product.template.only.form.view</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <field name="categ_id" position="after">
+                    <field name="part_number"
+                           attrs="{'required':[('is_spare_part','=',True)], 'invisible': [('is_spare_part','=',False)]}"/>
+                    <field name="purpose"
+                           attrs="{'required':[('is_spare_part','=',True)], 'invisible': [('is_spare_part','=',False)]}"/>
+                    <field name="remark"
+                           attrs="{'required':[('is_spare_part','=',True)], 'invisible': [('is_spare_part','=',False)]}"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="smnl_product_template_tree_view" model="ir.ui.view">
+            <field name="name">smnl.product.template.tree.inherit.stock.account</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="part_number"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="beep_fleet.smnl_spare_part_product_template_search_form_view" model="ir.ui.view">
+            <field name="name">product.template.search.stock.form</field>
+            <field name="model">product.template</field>
+            <field name="mode">primary</field>
+            <field name="inherit_id" ref="product.product_template_search_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='pricelist_id']" position="after">
+                    <separator/>
+                    <field name="is_spare_part"/>
+                    <separator/>
+                    <filter name="is_spare_part" string="Spare-Part" domain="[('is_spare_part','=',1)]"/>
+                    <separator/>
+                    <field name="part_number" string="Part Number"/>
+                    <separator/>
+                    <filter name="part_number" string="Part Number" domain="[('part_number','!=',False)]"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="stock.product_template_search_form_view_stock" model="ir.ui.view">
+            <field name="name">product.template.search.stock.form</field>
+            <field name="model">product.template</field>
+            <field name="mode">primary</field>
+            <field name="inherit_id" ref="product.product_template_search_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='pricelist_id']" position="after">
+                    <separator/>
+                    <field name="location_id" context="{'location': self}" filter_domain="[]"/>
+                    <field name="warehouse_id" context="{'warehouse': self}" filter_domain="[]"/>
+                    <separator/>
+                    <filter name="real_stock_available" string="Available Products" domain="[('qty_available','&gt;',0)]"/>
+                    <filter name="real_stock_negative" string="Negative Forecasted Quantity" domain="[('virtual_available','&lt;',0)]"/>
+                    <separator/>
+                    <field name="is_spare_part"/>
+                    <separator/>
+                    <filter name="is_spare_part" string="Spare-Part" domain="[('is_spare_part','=',1)]"/>
+                    <separator/>
+                    <field name="part_number" string="Part Number"/>
+                    <separator/>
+                    <filter name="part_number" string="Part Number" domain="[('part_number','!=',False)]"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

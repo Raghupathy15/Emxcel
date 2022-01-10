@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="smnl_purchase_order_form_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase_requisition.purchase_order_form_inherit" />
+        <field name="arch" type="xml">
+            <field name="requisition_id" position="replace">
+                <field name="is_quantity_copy" invisible="1"/>
+                <field name="requisition_id"
+                    domain="[('state', 'in', ('in_progress', 'open', 'ongoing')), ('vendor_id', 'in', (partner_id, False))]" readonly="1"/>
+            </field>
+        </field>
+    </record>
+</odoo>

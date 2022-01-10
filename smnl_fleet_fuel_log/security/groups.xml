@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+        <!-- Fleet Tanker for Multi company -->
+        <record id="fleet_tanker_multi_company_rule" model="ir.rule">
+            <field name="name">Fleet Tanker Multi company rule</field>
+            <field name="model_id" ref="model_fleet_tanker"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+		<!-- Fuel Filling for Multi company -->
+        <record id="fuel_filling_multi_company_rule" model="ir.rule">
+            <field name="name">Fuel Filling Multi company rule</field>
+            <field name="model_id" ref="model_fuel_filling"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+	</data>
+</odoo>

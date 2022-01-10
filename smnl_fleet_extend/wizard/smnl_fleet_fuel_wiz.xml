@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="smnl_fleet_fuel_form_wiz" model="ir.ui.view">
+        <field name="name">smnl.fleet.fuel.form.wiz</field>
+        <field name="model">fleet.fuel.wiz</field>
+        <field name="arch" type="xml">
+            <form string="Fleet Cost Report">
+                <group>
+                    <group>
+                        <field name="from_date"/>
+                        <field name="fleet_id"/>
+                    </group>
+                    <group>
+                        <field name="to_date"/>
+                    </group>
+                </group>
+                <footer>
+                    <button string='View' name="action_fleet_fuel_report" type="object" class="oe_highlight"/>
+                    <button string='Print' name="print_fuel_report" type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_open_fleet_fuel_wiz" model="ir.actions.act_window">
+        <field name="name">Fleet Fuel Report</field>
+        <field name="res_model">fleet.fuel.wiz</field>
+        <field name="view_mode">form</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="smnl_fleet_fuel_form_wiz"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

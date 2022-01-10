@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<template id="custom_report_payslip" inherit_id="hr_payroll.report_payslip">
+			<xpath expr="//table[@class='table table-sm table-bordered']" position="replace">
+				<table class="table table-sm table-bordered">
+					<tr>
+						<td><strong>Employee Code</strong></td>
+						<td><span t-field="o.employee_id.emp_code"/></td>
+						<td><strong>Date of Joining</strong></td>
+						<td><span t-field="o.employee_id.date_of_joining"/></td>
+					</tr>
+						<td><strong>Employee Name</strong></td>
+						<td><span t-field="o.employee_id.name"/></td>
+						<td><strong>Total Days</strong></td>
+						<td><p> 30 </p></td>
+					<tr>
+						<td><strong>Designation</strong></td>
+						<td><span t-field="o.employee_id.job_id"/></td>
+						<td><strong>Present Days</strong></td>
+						<td>
+							<t t-foreach="o.worked_days_line_ids" t-as="present">
+								<span t-if="present.code == 'PRESENT'">
+									<span t-field="present.number_of_days"/>
+								</span>
+							</t>
+						</td>
+					</tr>
+					<tr>
+						<td><strong>UAN</strong></td>
+						<td><span t-field="o.employee_id.uan"/></td>
+						<td><strong>Paid Leaves</strong></td>
+						<td>
+							<t t-set="sum_row2" t-value="0"/>
+							<t t-foreach="o.worked_days_line_ids" t-as="paid_leaves">
+								<span t-if="paid_leaves.code in ['Casual Leave','Privilege Leave','Special Leave','Sick Leave']">
+									<t t-set="sum_row2" t-value="sum_row2+paid_leaves.number_of_days"/>
+								</span>
+							</t>
+							<t t-esc="sum_row2"/>
+						</td>
+					</tr>
+					<tr>
+						<td><strong>PF Number</strong></td>
+						<td><span t-field="o.employee_id.pf_no"/></td>
+						<td><strong>Earned Days</strong></td>
+						<td>
+							<t t-set="sum_row2" t-value="0"/>
+							<t t-foreach="o.worked_days_line_ids" t-as="earned">
+								<span t-if="earned.code in ['PRESENT','Casual Leave','Privilege Leave','Special Leave','Sick Leave']">
+									<t t-set="sum_row2" t-value="sum_row2+earned.number_of_days"/>
+								</span>
+							</t>
+							<t t-esc="sum_row2"/>
+						</td>
+					</tr>
+					<tr>
+						<td><strong>ESIC Number</strong></td>
+						<td><span t-field="o.employee_id.esic_no"/></td>
+						<td><strong>Balance Leaves</strong></td>
+						<td>PL - <span t-field="o.remaining_pl"/>  CL -
+						<span t-field="o.remaining_cl"/> SL - 
+						<span t-field="o.remaining_sl"/>
+						</td>
+					</tr>
+					<tr>
+						<td><strong>Bank Name</strong></td>
+						<td><span t-field="o.employee_id.bank_account_id.bank_id.name"/></td>
+						<td><strong>Bank Account No</strong></td>
+						<td><span t-field="o.employee_id.bank_account_id"/></td>
+					</tr>
+				</table>
+			</xpath>
+
+			<xpath expr="//div/table[2]" position="replace">
+				<div class="row">
+					<div class="col-6">
+						<table class="table table-sm">
+							<thead>
+								<tr>
+									<th>Particulars</th>
+									<th class="text-right">Amount</th>
+								</tr>
+							</thead>
+							<tbody>
+								<t t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line">
+									<tr t-if="line.category_id.code in ['BASIC','OT','NET']">
+										<td>
+											<span t-field="line.name"/>
+										</td>
+										<td class="text-right">
+											<span t-if="line.category_id.code == 'BASIC'">
+												<span t-esc="line.total"
+													  t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+											</span>
+											<span t-if="line.category_id.code == 'OT'">
+												<span t-esc="line.total"
+													  t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+											</span>
+											<span t-if="line.category_id.code == 'NET'">
+												<span t-esc="line.total"
+													  t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+											</span>
+										</td>
+									</tr>
+								</t>
+								<tr>
+									<td><strong>Total Earnings</strong></td>
+									<td>
+										<t t-set="sum_row2" t-value="0"/>
+										<t t-foreach="o.line_ids" t-as="total_earnings">
+											<span t-if="total_earnings.code in ['BASIC','OT','NET']">
+												<t t-set="sum_row2" t-value="sum_row2+total_earnings.total"/>
+											</span>
+										</t>
+										<t t-esc="sum_row2"/>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="col-6">						
+						<table class="table table-sm">
+							<thead>
+								<tr>
+									<th>Deductions</th>
+									<th class="text-right">Amount</th>
+								</tr>
+							</thead>
+							<tbody>
+								<t t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line">
+									<tr t-if="line.code in ['EPF','ESI','CVR']">
+										<td>
+											<span t-field="line.name"/>
+										</td>
+										<td class="text-right">
+											<span t-if="line.code == 'EPF'">
+												<span t-esc="line.total"
+													  t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+											</span>
+											<span t-if="line.code == 'ESI'">
+												<span t-esc="line.total"
+													  t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+											</span>
+											<span t-if="line.code == 'CVR'">
+												<span t-esc="line.total"
+													  t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+											</span>
+
+										</td>
+									</tr>
+								</t>
+								<tr>
+									<td><strong>Total Deductions</strong></td>
+									<td>
+										<t t-set="sum_row2" t-value="0"/>
+										<t t-foreach="o.line_ids" t-as="total_deductions">
+											<span t-if="total_deductions.code in ['EPF','ESI','CVR']">
+												<t t-set="sum_row2" t-value="sum_row2+total_deductions.total"/>
+											</span>
+										</t>
+										<t t-esc="sum_row2"/>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6">
+						<table class="table table-sm">
+							<tbody>
+								<t t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line">
+									<tr t-if="line.category_id.code in ['NET']">
+										<td colspan="2">
+											<t t-set="currency" t-value="o.company_id.currency_id"/>
+											<span t-esc="currency.amount_to_text(line.total)"/>
+										</td>
+									</tr>
+								</t>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<br/>
+			</xpath>
+			<xpath expr="//div[1]/p[2]" position="replace">
+				<p class="text-center"><strong> This is computer generated Document  need not required any signature.</strong></p>
+			</xpath>
+		</template>
+	</data>
+</odoo>

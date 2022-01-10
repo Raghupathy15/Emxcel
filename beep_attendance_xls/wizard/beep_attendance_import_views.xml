@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="beep_attendance_import_form" model="ir.ui.view">
+        <field name="name">beep.attendance.import.form</field>
+        <field name="model">beep.attendance.import</field>
+        <field name="arch" type="xml">
+            <form string="Attendance Report">
+              <group>
+                <group>
+                  <field name="upload_file"/>
+                  <field name="log"/>
+                </group>
+                <group>
+                </group>
+              </group>
+                <footer>
+                    <button name="import_attendance" string="Import"
+                            type="object" class="oe_highlight"/>
+                    <button name="update_employee_details" string="Update Employee"
+                            type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="beep_attendance_import_action" model="ir.actions.act_window">
+        <field name="name">Attendance Import</field>
+        <field name="res_model">beep.attendance.import</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="beep_attendance_import_menu"
+              name="Attendance Import"
+              action="beep_attendance_import_action"
+              parent="hr_attendance.menu_hr_attendance_report"
+              sequence="5"/>
+</odoo>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="True">
+        <record id="smnl_lease_partner_1" model="res.partner">
+            <field name="name">ADANI</field>
+            <field name="company_id" eval="None"/>
+            <field name="customer" eval="False"/>
+            <field name="is_company" eval="True"/>
+            <field name="is_lease" eval="True"/>
+        </record>
+
+        <record id="smnl_lease_partner_2" model="res.partner">
+            <field name="name">ECLPL</field>
+            <field name="company_id" eval="None"/>
+            <field name="customer" eval="False"/>
+            <field name="is_company" eval="True"/>
+            <field name="is_lease" eval="True"/>
+        </record>
+
+        <record id="smnl_lease_partner_3" model="res.partner">
+            <field name="name">SPCLPL</field>
+            <field name="company_id" eval="None"/>
+            <field name="customer" eval="False"/>
+            <field name="is_company" eval="True"/>
+            <field name="is_lease" eval="True"/>
+        </record>
+
+        <record id="smnl_lease_partner_4" model="res.partner">
+            <field name="name">KLPL</field>
+            <field name="company_id" eval="None"/>
+            <field name="customer" eval="False"/>
+            <field name="is_company" eval="True"/>
+            <field name="is_lease" eval="True"/>
+        </record>
+
+        <record id="smnl_lease_partner_5" model="res.partner">
+            <field name="name">SMNL</field>
+            <field name="company_id" eval="None"/>
+            <field name="customer" eval="False"/>
+            <field name="is_company" eval="True"/>
+            <field name="is_lease" eval="True"/>
+        </record>
+
+        <record id="smnl_lease_partner_6" model="res.partner">
+            <field name="name">VE-Commercial</field>
+            <field name="company_id" eval="None"/>
+            <field name="customer" eval="False"/>
+            <field name="is_company" eval="True"/>
+            <field name="is_lease" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

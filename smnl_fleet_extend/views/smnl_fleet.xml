@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="smnl_fleet_vehicle_view_form">
+			<field name="name">smnl.fleet.vehicle.view.form</field>
+			<field name="model">fleet.vehicle</field>
+			<field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//form" position="attributes">
+					<attribute name="create">0</attribute>
+				</xpath>
+				<field name="license_plate" position="after">
+					<label for="smnl_doors" class="oe_edit_only"/>
+					/ <field name="smnl_doors"/>
+				</field>
+				<xpath expr="//sheet/group[2]" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//sheet" position="inside">
+					<notebook>
+						<page string="Purchase" name="purchase">
+							<group col="2">
+								<group>
+									<field name="product_id" readonly="1" force_save="1" invisible="1"/>
+									<field name="fleet_type"/>
+									<field name="engine_number"/>
+									<field name="registration_number"/>
+								</group>
+								<group>
+									<field name="purchase_date" readonly="1" force_save="1"/>
+									<field name="purchase_shop" readonly="1" force_save="1"/>
+									<field name="purchase_id" readonly="1" force_save="1"/>
+									<field name="bill_number" readonly="1" force_save="1" invisible="1"/>
+									<field name="purchase_line_id" readonly="1" force_save="1" invisible="1"/>
+									<field name="company_currency_id" invisible="1"/>
+									<field name="purchase_price" readonly="1" force_save="1" widget="monetary"/>
+									<field name="warranty_expiry_date"/>
+									<field name="stock_move_line_id" readonly="1" force_save="1" invisible="1"/>
+									<field name="stock_inventory_line_id" readonly="1" force_save="1" invisible="1"/>
+								</group>
+							</group>
+						</page>
+						<page string="Bill" name="bill">
+							<field name="bill_ids" readonly="1" force_save="1"/>
+						</page>
+						<page string="Other" name="other">
+							<group col="2">
+								<group string="Additional Properties">
+									<field name="seats"/>
+									<field name="color"/>
+									<label for="lifetime"/>
+									<div class="o_row">
+										<field name="lifetime"/>
+										<field name="lifetime_unit"/>
+									</div>
+								</group>
+								<group string="Engine Options">
+									<field name="transmission"/>
+									<field name="fuel_type"/>
+									<label for="co2"/>
+									<div class="o_row" name="co2">
+										<field name="co2"/>
+										<span>g/km</span>
+									</div>
+									<field name="horsepower"/>
+									<field name="horsepower_tax"/>
+									<label for="power"/>
+									<div class="o_row">
+										<field name="power"/>
+										<span>kW</span>
+									</div>
+								</group>
+							</group>
+						</page>
+					</notebook>
+				</xpath>
+				<xpath expr="//field[@name='model_year']" position="after">
+					<field name="load_capacity"/>
+					<field name="fuel_capacity"/>
+					<field name="own_lease" required="1"/>
+					<field name="own_company" required="1"/>
+				</xpath>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="smnl_fleet_vehicle_view_tree">
+			<field name="name">smnl.fleet.vehicle.view.tree</field>
+			<field name="model">fleet.vehicle</field>
+			<field name="inherit_id" ref="fleet.fleet_vehicle_view_tree"/>
+			<field name="arch" type="xml">
+				<xpath expr="//tree" position="attributes">
+					<attribute name="create">0</attribute>
+				</xpath>
+				<field name="license_plate" position="after">
+					<field name="smnl_doors"/>
+				</field>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="smnl_fleet_vehicle_view_search">
+			<field name="name">smnl.fleet.vehicle.view.search.smnl</field>
+			<field name="model">fleet.vehicle</field>
+			<field name="inherit_id" ref="fleet.fleet_vehicle_view_search"/>
+			<field name="arch" type="xml">
+				<field name="name" position="after">
+					<field name="smnl_doors"/>
+				</field>
+				<filter name="groupby_make" position="after">
+					<filter name="groupby_fleet_type" context="{'group_by' : 'fleet_type'}" string="Fleet Type"/>
+					<filter name="groupby_own_company" context="{'group_by' : 'own_company'}" string="Own/Hire/Company"/>
+				</filter>
+			</field>
+		</record>
+
+		<record id='smnl_fleet_vehicle_view_kanban' model='ir.ui.view'>
+			<field name="name">smnl.fleet.vehicle.kanban</field>
+			<field name="model">fleet.vehicle</field>
+			<field name="inherit_id" ref="fleet.fleet_vehicle_view_kanban"/>
+			<field name="arch" type="xml">
+				<xpath expr="//kanban" position="attributes">
+					<attribute name="create">0</attribute>
+				</xpath>
+				<field name="model_id" position="after">
+					<field name="vin_sn"/>
+				</field>
+				<xpath expr="//strong[hasclass('o_kanban_record_title')]" position="inside">
+					/<field name="smnl_doors"/>
+				</xpath>
+				<xpath expr="//strong[hasclass('o_kanban_record_title')]" position="inside">
+					<br/>
+					VIN NO:
+					<field name="vin_sn"/>
+				</xpath>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="inherit_fleet_vehicle_odometer_view_form">
+			<field name="name">fleet.vehicle.odometer.form</field>
+			<field name="model">fleet.vehicle.odometer</field>
+			<field name="inherit_id" ref="fleet.fleet_vehicle_odometer_view_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='date']" position="after">
+					<field name="company_id"/>
+				</xpath>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="inherit_fleet_vehicle_costs_view_form">
+			<field name="name">fleet.vehicle.cost.form</field>
+			<field name="model">fleet.vehicle.cost</field>
+			<field name="inherit_id" ref="fleet.fleet_vehicle_costs_view_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='parent_id']" position="after">
+					<field name="company_id"/>
+				</xpath>
+			</field>
+		</record>
+
+
+		<record model="ir.ui.view" id="inherit_fleet_vehicle_log_contract_view_form">
+			<field name="name">fleet.vehicle.log.contract.form</field>
+			<field name="model">fleet.vehicle.log.contract</field>
+			<field name="inherit_id" ref="fleet.fleet_vehicle_log_contract_view_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='expiration_date']" position="after">
+					<field name="company_id"/>
+				</xpath>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="inherit_fleet_vehicle_log_fuel_view_form">
+			<field name="name">fleet.vehicle.log.fuel.form</field>
+			<field name="model">fleet.vehicle.log.fuel</field>
+			<field name="inherit_id" ref="fleet.fleet_vehicle_log_fuel_view_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='vendor_id']" position="after">
+					<field name="company_id"/>
+				</xpath>
+			</field>
+		</record>
+
+	</data>
+</odoo>

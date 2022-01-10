@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="smnl_contract.group_hr_contract_office" model="res.groups">
+        <field name="name">Officer</field>
+        <field name="category_id" ref="base.module_category_hr_contract"/>
+        <field name="implied_ids" eval="[(4, ref('hr.group_hr_user'))]"/>
+    </record>
+
+     <record id="hr_contract.group_hr_contract_manager" model="res.groups">
+    	<field name="implied_ids" eval="[(4, ref('smnl_contract.group_hr_contract_office'))]"/>
+    </record>
+
+    <record id="hr_payroll.group_hr_payroll_user" model="res.groups">
+	    <field name="implied_ids" eval="[(4, ref('smnl_contract.group_hr_contract_office')),(3, ref('hr_contract.group_hr_contract_manager'))]"/>
+	</record>
+
+	<menuitem
+            id="hr_contract.hr_menu_contract"
+            name="Contracts"
+            action="hr_contract.action_hr_contract"
+            parent="hr.menu_hr_root"
+            sequence="4"
+            groups="smnl_contract.group_hr_contract_office"/>
+
+</odoo>

@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="inherit_fleet_vehicle_log_services_view_form" model="ir.ui.view">
+        <field name="name">fleet.vehicle.log.services.form</field>
+        <field name="model">fleet.vehicle.log.services</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_log_services_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet/group[1]" position="before">
+                <div class="oe_title">
+                    <h1>
+                        <field name="name"/>
+                    </h1>
+                </div>
+            </xpath>
+            <xpath expr="//form/sheet" position="after">
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </xpath>
+            <xpath expr="//form/sheet" position="before">
+                <header>
+                    <field name="state" widget="statusbar"/>
+                    <button name="action_draft" class="oe_highlight" type="object" string="Draft" states="job_card"/>
+                    <button name="action_request" class="oe_highlight" type="object" string="Request" states="draft"/>
+                    <button name="action_approve" class="oe_highlight" type="object" string="Approve" states="request"
+                            groups="fleet.fleet_group_manager"/>
+                    <button name="action_reject" class="oe_highlight" type="object" string="Reject" states="request"
+                            groups="fleet.fleet_group_manager"/>
+                    <button name="action_in_progress" class="oe_highlight" type="object" string="Parts Allocation"
+                            groups="stock.group_stock_manager" states="approve,sp_request"/>
+                    <button name="action_done" class="oe_highlight" type="object" string="Done" states="in_progress"
+                            context="{'default_service_log_id': active_id}"/>
+                    <button name="action_gate_pass" class="oe_highlight" type="object" string="Create Gate pass" states="in_progress" groups="fleet.fleet_group_manager">
+                    </button>
+                </header>
+            </xpath>
+
+            <xpath expr="//sheet/group" position="before">
+                <div class="oe_button_box" name="button_box">
+                    <button name="action_spare_part_purchase_request"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-shopping-cart"
+                            attrs="{'invisible': [('sp_pr_visibility','=',False)]}"
+                            string="Requested PR"
+                            groups="stock.group_stock_manager"
+                            help="show the all purchase request reference...">
+                        <field name="sp_pr_visibility" widget="statinfo" string="PR Visibility" invisible="1"/>
+                    </button>
+                    <button name="service_gate_pass"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-truck"
+                        string="Gate Pass"
+                        attrs="{'invisible': ['|', '|', ('gate_pass_count','&lt;=',0), ('is_third_party','!=',True), ('state','not in',['done', 'in_progress'])]}"
+                        >
+                    </button>
+                    <button name="action_purchase_order"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-shopping-cart"
+                            attrs="{'invisible': [('purchase_order_count', '=', 0)]}"
+                            help="Show the all third-party service purchase order...">
+                        <field name="purchase_order_count" widget="statinfo" string="Third Party PO Reference"/>
+                    </button>
+                </div>
+            </xpath>
+            <field name="vehicle_id" position="before">
+                <field name="service_request_number"/>
+                <field name="is_third_party" invisible="1"/>
+            </field>
+            <field name="vehicle_id" position="after">
+                <field name="vehicle_type"/>
+                <field name="gate_pass_count" invisible="1"/>
+            </field>
+            <field name="cost_subtype_id" position="attributes">
+                <attribute name="domain">[]</attribute>
+            </field>
+            <field name="cost_subtype_id" position="after">
+                <field name="repair_maintenance_type_id"/>
+                <field name="is_breakdown" invisible="1"/>
+                <field name="breakdown_type_id" attrs="{'invisible':[('is_breakdown','=', False)]}"/>
+            </field>
+            <xpath expr="//field[@name='cost_subtype_id']" position="after">
+                <field name="purchase_order_ids" widget="many2many_tags" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='amount']" position="replace">
+                <field name="total_amount"/>
+                <field name="amount" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='cost_ids']//field[@name='cost_subtype_id']" position="attributes">
+                <attribute name="domain">[]</attribute>
+                <attribute name="attrs">{'required':[('parent.third_party_service','=',True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='cost_ids']//field[@name='cost_subtype_id']" position="before">
+                <field name="vendor_id"
+                       attrs="{'required':[('parent.third_party_service','=',True)], 'column_invisible':[('parent.third_party_service', '=', False)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='odometer_unit']" position="replace">
+                <field name="odometer_unit"/>
+            </xpath>
+            <xpath expr="//form/sheet/group[1]/group[2]/div" position="after">
+                <field name="hr_reading" attrs="{'readonly': [('state', 'in', 'done')]}"/>
+            </xpath>
+            <xpath expr="//field[@name='hr_reading']" position="replace">
+                <label for="hr_reading"/>
+                <div class="o_row">
+                    <field name="hr_reading"/>
+                    <field name="hr_reading_unit" readonly="1" force_save="1"/>
+                    <field name="third_party_service" invisible="1"/>
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='date']" position="after">
+                <field name="date_of_delivery" attrs="{'readonly': [('state', 'in', 'done')]}"/>
+            </xpath>
+            <field name="date" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <xpath expr="//form/sheet/group[2]/group" position="after">
+                <group string="Port and Mechanic details">
+                    <field name="workshop_id" required="1" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                    <field name="workshop_supervisor_id" required="1" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                    <field name="assign_id" required="1" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                    <field name="fleet_supervisor_id" required="1" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                    <field name="driver_id" required="1" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                    
+                    <label for="towing_facility"/>
+                    <div class="o_row">
+                        <field name="towing_facility"/>
+                        <field name="location" placeholder="Location" attrs="{'invisible': [('towing_facility', '=', False)]}"/>
+                    </div>
+                    <field name="priority_level"/>
+                </group>
+                <group>
+                    <field name="short_issue_note"/>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='amount']" position="after">
+                <field name="next_service_date" attrs="{'readonly': [('state', 'in', 'done')]}"/>
+                <field name="service_approve_time" readonly="1"/>
+                <field name="service_done_time" readonly="1" attrs="{'invisible': [('state', 'not in', 'done')]}"/>
+                <field name="service_completion_time" force_save="1"
+                       attrs="{'invisible': [('state', 'not in', 'done')]}"/>
+                <field name="service_delay_reason"
+                       attrs="{'invisible': [('service_delay_reason', '=', False)]}" readonly="1"/>
+                <field name="is_check" invisible="1"/>
+                <field name="delay_type" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//form/sheet/group[3]" position="after">
+                <field name="picking_id" invisible="1"/>
+                <group name="spare_part" string="Spare Parts">
+                    <field name="spare_part_ids" nolabel="1">
+                        <tree string="Included Services" editable="bottom">
+                            <field name="product_tmpl_id" required="1"
+                                   domain="[('is_spare_part','=',True)]"
+                                   context="{'default_is_spare_part': True, 'default_type': 'product'}"/>
+                            <field name="use_qty"/>
+                            <field name="qty_available"/>
+                            <field name="require_po_qty" readonly="1" force_save="1"/>
+                            <field name="received_qty" readonly="1" force_save="1"/>
+                            <field name="serial_ids" widget="many2many_tags" readonly="1" force_save="1"/>
+                            <field name="product_cost"/>
+                            <field name="total_cost" sum="Total" readonly="1" force_save="1"/>
+                            <field name="purchase_request_ids" readonly="1" force_save="1" widget="many2many_tags"/>
+                            <field name="purchase_id" readonly="1" force_save="1" invisible="1"/>
+                            <button name="spare_part_po_generated" string="PO Reference" type="object"
+                                    class="btn-primary"
+                                    attrs="{'invisible': ['|', ('require_po_qty', '&lt;=', 0),('purchase_id','!=',False)], 'column_invisible': [('parent.state', 'in', ('draft','request'))]}"
+                                    groups="stock.group_stock_manager"
+                                    invisible="1"
+                            />
+                        </tree>
+                    </field>
+                </group>
+            </xpath>
+            <xpath expr="//group[5]" position="attributes">
+                <attribute name="string">Problem in Detail</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="smnl_fleet_vehicle_log_services_view_tree" model="ir.ui.view">
+        <field name="name">smnl.fleet.vehicle.log.services.view.tree</field>
+        <field name="model">fleet.vehicle.log.services</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_log_services_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="vehicle_id" position="after">
+                <field name="smnl_doors"/>
+            </field>
+            <xpath expr="//field[@name='amount']" position="replace">
+                <field name="total_amount"/>
+                <field name="amount" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="inherit_fleet_vehicle_log_services_view_search" model="ir.ui.view">
+        <field name="name">fleet.vehicle.log.services.search</field>
+        <field name="model">fleet.vehicle.log.services</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_log_services_view_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <field name="smnl_doors"/>
+            </xpath>
+            <xpath expr="//field[@name='cost_subtype_id']" position="after">
+                <group expand="1" string="Group By">
+                    <filter name="groupby_state" context="{'group_by' : 'state'}" string="Status"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id='fleet.fleet_vehicle_log_services_action' model='ir.actions.act_window'>
+        <field name="context">{'search_default_groupby_state': 1}</field>
+    </record>
+
+    <record id='smnl_fleet_vehicle_log_services_action' model='ir.actions.act_window'>
+        <field name="name">Parts Allocation Requests</field>
+        <field name="res_model">fleet.vehicle.log.services</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,kanban,form,graph</field>
+        <field name="context">{'search_default_groupby_state': 1}</field>
+        <field name="domain">[('state', 'in',('approve','sp_request'))]</field>
+    </record>
+    <record id='smnl_fleet_vehicle_log_services_workshop_action' model='ir.actions.act_window'>
+        <field name="name">Workshop Job orders</field>
+        <field name="res_model">fleet.vehicle.log.services</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,kanban,form,graph</field>
+    </record>
+
+    <menuitem
+            action="smnl_fleet_vehicle_log_services_action"
+            id="fleet_vehicle_log_services_menu"
+            parent="stock.menu_stock_root" sequence="3"
+            name="Part Request"/>
+
+    <menuitem id="menu_workshop_job_order_details" name="Workshop Job orders" parent="menus_fleet_workshop" action="smnl_fleet_vehicle_log_services_workshop_action"
+              sequence="2"/>
+
+</odoo>

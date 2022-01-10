@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="inherit_view_purchase_order" model="ir.ui.view">
+		<field name="name">inherit.purchase.order</field>
+		<field name="model">purchase.order</field>
+		<field name="inherit_id" ref="purchase.purchase_order_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//header" position="replace">
+				<header>
+					<button name="button_sm_request" string="Request Store Manager 1st Approval" type="object" context="{'send_rfq':True}" class="oe_highlight" 
+					attrs="{'invisible': ['|',('is_po_requisition', '=', True),('state', '!=', 'draft')]}"/>
+					<button name="button_req_sm_approve_1" states="req_store_manager_app_1" string="Store Manager Approve" type="object" context="{'send_rfq':True}" class="oe_highlight" groups="beep_purchase.group_purchase_store_manager_one"/>
+					<button name="button_hod_approve" states="req_hod_app" string="HOD Approve" type="object" context="{'send_rfq':True}" class="oe_highlight" groups="beep_purchase.group_purchase_hod_one"/>
+					<button name="button_req_sm_approve_2" states="req_store_manager_app_2" string="Store Manager Approve" type="object" context="{'send_rfq':True}" class="oe_highlight" groups="beep_purchase.group_purchase_store_manager_one"/>
+					<button name="button_confirm" type="object" states="sm_approved" string="Confirm Order" class="oe_highlight" id="bid_confirm" groups="purchase.group_purchase_manager, beep_purchase.group_purchase_hod_one, beep_purchase.group_purchase_store_manager_one"/>
+					<button name="button_direct_sm_approve" type="object" string="Direct SM Approve" class="oe_highlight" id="bid_confirm" attrs="{'invisible': ['|',('is_po_requisition', '!=', True),('state', '!=', 'draft')]}"/>
+					<button name="button_cancel" states="draft,req_store_manager_app_1,req_hod_app,sm_approved,req_store_manager_app_2,to approve,sent,purchase" string="Cancel" type="object" />
+
+					
+
+					<button name="action_rfq_send" states="sm_approved" string="Send by Email" type="object" context="{'send_rfq':True}" class="oe_highlight"/>
+					<!-- <button name="button_po_approve" string="Approve PO" type="object" class="oe_highlight" attrs="{'invisible':['|','|',('is_finance_manager','=',False),('state','!=','req_fm_app')]}"/> -->
+					<!-- <button name="print_quotation" string="Print RFQ" type="object" class="oe_highlight" groups="base.group_user" attrs="{'invisible': [('state','in',('draft','req_fm_app','fm_approved','sent','purchase','po_sent'))]}"/> -->
+
+					<button name="button_approve" type="object" states='to approve' string="Approve Order" class="oe_highlight" groups="purchase.group_purchase_manager"/>
+					<button name="action_view_invoice" string="Create Bill" type="object" class="oe_highlight" context="{'create_bill':True}" attrs="{'invisible': ['|', ('state', 'not in', ('purchase', 'done')), ('invoice_status', 'in', ('no', 'invoiced'))]}"/>
+					<button name="action_rfq_send" states="sent" string="Re-Send by Email" type="object" context="{'send_rfq':True}"/>
+					<!-- <button name="print_quotation" string="Print RFQ" type="object" states="draft" groups="base.group_user"/> -->
+					<button name="print_po" string="Print PO" type="object" states="purchase"/>
+					<!-- <button name="button_confirm" type="object" states="sm_approved" string="Confirm Order" id="draft_confirm"> -->
+					<button name="action_rfq_send" states="purchase" string="Send PO by Email" type="object" context="{'send_rfq':False}"/>
+					<button name="action_view_invoice" string="Create Bill" type="object" context="{'create_bill':True}" attrs="{'invisible': ['|', '|', ('state', 'not in', ('purchase', 'done')), ('invoice_status', 'not in', ('no', 'invoiced')), ('order_line', '=', [])]}"/>
+					<button name="button_draft" states="cancel" string="Set to Draft" type="object" />
+					
+					<button name="button_done" type="object" string="Lock" states="purchase"/>
+					<button name="button_unlock" type="object" string="Unlock" states="done" groups="purchase.group_purchase_manager"/>
+					<field name="state" widget="statusbar" statusbar_visible="draft,req_store_manager_app_1,req_hod_app,req_store_manager_app_2,purchase" readonly="1"/>
+				</header>
+			</xpath>
+			<xpath expr="//field[@name='date_order']" position="after">
+				<field name="is_po_requisition" invisible="1"/>
+				<field name="is_po_confirmed" invisible="1"/>
+			</xpath>
+			<xpath expr="//field[@name='partner_id']" position="replace">
+				<field name="partner_id" context="{'search_default_supplier':1, 'default_supplier':1, 'default_customer':0, 'show_vat': True}" domain="[('supplier','=',True)]"
+								placeholder="Name, TIN, Email, or Reference"/>
+			</xpath>
+			<xpath expr="//form/sheet/notebook/page/field/tree/field[@name='name']" position="after">
+				<field name="qty_available"/>
+			</xpath>
+			<xpath expr="//form/sheet/notebook/page/field/tree/field[@name='price_unit']" position="before">
+				<field name="last_po_price" force_save="1"/>
+			</xpath>
+			<xpath expr="//field[@name='name']" position="after">
+				<field name="pr_sequence" attrs="{'invisible': [('is_po_confirmed', '!=', False)]}"/>
+			</xpath>
+			<field name="name" position="replace">
+				<field name="name" readonly="1" attrs="{'invisible': [('is_po_confirmed', '=', False)]}"/>
+			</field>
+		</field>
+	</record>
+
+	<record id="purchase_order_form_bi_inherit" model="ir.ui.view">
+		<field name="name">purchase.order.form.bi.inherit</field>
+		<field name="model">purchase.order</field>
+		<field name="inherit_id" ref="purchase.purchase_order_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//notebook/page/field[@name='order_line']/tree/field[@name='price_unit']" position="after">
+				<field name="discount"/>
+				<field name="discount_unit_price" readonly="1" force_save="1"/>
+			</xpath>
+		</field>
+	</record>
+
+	<!-- Adding new menu for Purchase Requisition -->
+	<record id="view_purchase_requisition_filter" model="ir.ui.view">
+		<field name="name">request.quotation.select</field>
+		<field name="model">purchase.order</field>
+		<field name="arch" type="xml">
+			<search string="Search Purchase Order">
+				<field name="name" string="Reference"/>
+				<field name="partner_id" operator="child_of"/>
+				<field name="product_id"/>
+				<field name="create_uid"/>
+				<field name="user_id"/>
+				<filter name="my_purchases" string="My Purchases" domain="[('user_id','=', uid)]"/>
+				<separator/>
+				
+				<separator/>
+				<filter string="My Activities" name="activities_my"
+					domain="[('activity_ids.user_id', '=', uid)]"/>
+				<separator/>
+				<filter string="Late Activities" name="activities_overdue"
+					domain="[('activity_ids.date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"
+					help="Show all records which has next action date is before today"/>
+				<filter string="Today Activities" name="activities_today"
+					domain="[('activity_ids.date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"/>
+				<filter string="Future Activities" name="activities_upcoming_all"
+					domain="[('activity_ids.date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))
+					]"/>
+				<group expand="0" string="Group By">
+					<filter string="Vendor" name="vendor" domain="[]" context="{'group_by':'partner_id'}"/>
+					<filter string="Purchase Representative" name="representative" domain="[]" context="{'group_by':'user_id'}"/>
+					<filter string="Order Date" name="order_date" domain="[]" context="{'group_by':'date_order'}"/>
+					<filter string="Expected Date" name="expected_date" domain="[]" context="{'group_by':'date_planned'}"/>
+				</group>
+			</search>
+		</field>
+	</record>
+
+	<record id="action_purchase_orders_line" model="ir.actions.act_window">
+		<field name="name">Purchase Orders Lines</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">purchase.order.line</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[('product_id', '=', active_id)]</field>
+	</record>
+
+	<record id="product_normal_form_view" model="ir.ui.view">
+		<field name="name">product.product.form</field>
+		<field name="model">product.product</field>
+		<field name="inherit_id" ref="product.product_normal_form_view"/>
+		<field name="arch" type="xml">
+			<xpath expr="//form/sheet/div/button[@name='toggle_active']" position="before">
+				<button string="Purchase History" type="action"
+					name="%(beep_purchase.action_purchase_orders_line)d"
+					class="oe_stat_button" icon="fa-history" attrs="{'invisible': [('purchase_ok', '=', False)]}">
+				</button>
+			</xpath>
+		</field>
+	</record>
+
+	<record id="purchase_requisition_action" model="ir.actions.act_window">
+		<field name="name">Purchase Requisition</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">purchase.order</field>
+		<field name="view_mode">tree,kanban,form,pivot,graph,calendar,activity</field>
+		<field name="domain">[('state','=','draft')]</field>
+		<field name="context">{}</field>
+		<field name="search_view_id" ref="view_purchase_requisition_filter"/>
+		<field name="help" type="html">
+		  <p class="o_view_nocontent_smiling_face">
+			Create a Purchase Requisition
+		  </p><p>
+			The Purchase Requisition contains the history of the discussion
+			you had with your vendor.
+		  </p>
+		</field>
+	</record>
+
+	<!-- Adding domain for existing 'Requests for Quotation' -->
+	<record id="purchase.purchase_rfq" model="ir.actions.act_window">
+		<field name="name">Requests for Quotation</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">purchase.order</field>
+		<field name="view_mode">tree,kanban,form,pivot,graph,calendar,activity</field>
+		<field name="domain">[('state','!=','draft')]</field>
+		<field name="context">{}</field>
+		<field name="search_view_id" ref="purchase.view_purchase_order_filter"/>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Create a request for quotation
+			</p><p>
+			The quotation contains the history of the discussion
+			you had with your vendor.
+		  </p>
+		</field>
+	</record>
+
+	<menuitem action="purchase_requisition_action" id="menu_purchase_requisition"
+		parent="purchase.menu_procurement_management"
+		sequence="-1"/>
+		
+</odoo>
